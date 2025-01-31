@@ -9,3 +9,8 @@ function dd(mixed $value)
   echo "</pre>";
   die();
 }
+
+function e($value): string
+{
+  return htmlspecialchars((string) $value);
+}
