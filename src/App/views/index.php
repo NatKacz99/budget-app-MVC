@@ -35,5 +35,5 @@
       </div>
     </section>
   </main>
-  <script src="index.js"></script>
+  <script src="/assets/index.js"></script>
 </body>
