@@ -146,8 +146,8 @@ if (isset($_POST['e-mail'])) {
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-  <link rel="stylesheet" href="style_logowanie_rejestracja.css">
-  <link rel="stylesheet" href="./css/cap.css">
+  <link rel="stylesheet" href="style_login_register.css">
+  <link rel="stylesheet" href="assets/css/cap.css">
 
 </head>
 
