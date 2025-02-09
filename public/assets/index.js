@@ -3,6 +3,6 @@ document.getElementById("log-in").addEventListener("click", function () {
 });
 
 document.getElementById("sign-up").addEventListener("click", function () {
-  window.open("register.php");
+  window.open("/src/App/views/register.php");
 });
 
