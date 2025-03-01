@@ -30,10 +30,9 @@
 
         <div class="container__sign-up">
           <p>Nie masz konta?</p>
-          <button id="sign-up">Zarejestruj się</button>
+          <a href="/register"><button id="sign-up">Zarejestruj się</button></a>
         </div>
       </div>
     </section>
   </main>
-  <script src="/assets/index.js"></script>
 </body>

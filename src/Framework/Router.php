@@ -12,6 +12,7 @@ class Router
   public function add(string $method, string $path, array $controller)
   {
     $path = $this->normalizePath($path);
+
     $this->routes[] = [
       'path' => $path,
       'method' => strtoupper($method),
@@ -19,7 +20,7 @@ class Router
     ];
   }
 
-  public function normalizePath(string $path): string
+  private function normalizePath(string $path): string
   {
     $path = trim($path, '/');
     $path = "/{$path}/";
@@ -34,22 +35,26 @@ class Router
     $method = strtoupper($method);
 
     foreach ($this->routes as $route) {
-      if (!preg_match("#^{$route['path']}$#", $path) || $route['method'] !== $method) {
+      if (
+        !preg_match("#^{$route['path']}$#", $path) ||
+        $route['method'] !== $method
+      ) {
         continue;
       }
 
       [$class, $function] = $route['controller'];
 
       $controllerInstance = $container ?
-        $container->resolve($class) : new $class;
+        $container->resolve($class) :
+        new $class;
 
-      $action = fn() => $controllerInstance->{$function}();
+      $action = fn () => $controllerInstance->{$function}();
 
       foreach ($this->middlewares as $middleware) {
         $middlewareInstance = $container ?
           $container->resolve($middleware) :
           new $middleware;
-        $action = fn() => $middlewareInstance->process($action);
+        $action = fn () => $middlewareInstance->process($action);
       }
 
       $action();

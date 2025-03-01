@@ -1,53 +1,10 @@
 <?php
 
-session_start();
-
 if (isset($_POST['e-mail'])) {
   $all_OK = true;
 
-  $username = $_POST['username'];
-
-  if (ctype_alnum($username) == false) {
-    $all_OK = false;
-    $_SESSION['error_username'] = "Nazwa może się składać tylko z liter i cyfr (bez polskich znaków).";
-  }
-
-  $email = $_POST['e-mail'];
-
-  $email_for_validation = filter_var($email, FILTER_SANITIZE_EMAIL);
-  if (filter_var($email_for_validation, FILTER_VALIDATE_EMAIL) == false || $email_for_validation != $email) {
-    $all_OK = false;
-    $_SESSION['error_email'] = "Niepoprawny adres e-mail.";
-  }
-
-  $password1 = $_POST['password1'];
-  $password2 = $_POST['password2'];
-
-  if ($password1 !== $password2) {
-    $all_OK = false;
-    $_SESSION['error_password1'] = "Podane hasła nie są identyczne.";
-  }
-
-  if (strlen($password1) < 8) {
-    $all_OK = false;
-    $_SESSION['error_password2'] = "Hasło powinno zawierać przynajmniej 8 znaków.";
-  }
-
-  if (!preg_match('~[0-9]+~', $password1)) {
-    $all_OK = false;
-    $_SESSION['error_password3'] = "Hasło powinno mieć przynajmniej jedną cyfrę.";
-  }
-
   $password_hash = password_hash($password1, PASSWORD_DEFAULT);
 
-  $secret_key = "6LeWdloqAAAAAB3GgdokbP8w9rT5cXizEVYE7M2y";
-  $check = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret_key . '&response=' . $_POST['g-recaptcha-response']);
-
-  $answer = json_decode($check);
-  if ($answer->success == false) {
-    $all_OK = false;
-    $_SESSION['error_bot'] = "Potwierdź, że nie jesteś botem.";
-  }
 
   require_once "connect.php";
   mysqli_report(MYSQLI_REPORT_STRICT);
@@ -131,30 +88,12 @@ if (isset($_POST['e-mail'])) {
 
 ?>
 
-
-<!DOCTYPE html>
-
-<html lang="pl">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Rejestracja</title>
-
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-  <link rel="stylesheet" href="/assets/style_login_register.css">
-  <link rel="stylesheet" href="/css/cap.css">
-
-</head>
+<?php include $this->resolve("partials/_headerRegister.php"); ?>
 
 <body class="d-flex align-items-center py-4 justify-content-center">
 
   <main class="form-signin w-100 m-auto" style="max-width: 400px;">
-    <form method="post">
+    <form method="post" action="/register">
       <h1 class="text-center pb-4">Rejestracja</h1>
 
       <div class="container">
@@ -163,102 +102,61 @@ if (isset($_POST['e-mail'])) {
             <i class="icon-user"></i>
           </span>
           <div class="form-floating">
-            <input type="text" name="username" class="form-control mb-2" class="floatingInput" placeholder="Name" mb-2>
+            <input value="<?php echo e($oldFormData['name'] ?? ''); ?>" type="text" name="name" class="form-control mb-2" class="floatingInput" placeholder="Name" mb-2>
             <label for="floatingInput">Imię</label>
           </div>
         </div>
-
-        <div class="error">
-          <?php
-
-          if (isset($_SESSION['error_username'])) {
-            echo $_SESSION['error_username'];
-            unset($_SESSION['error_username']);
-          }
-
-          ?>
-        </div>
+        <?php if (array_key_exists('name', $errors)) : ?>
+          <div class="error">
+            <?php echo e($errors['name'][0]); ?>
+          </div>
+        <?php endif; ?>
 
         <div class="input-group">
           <span class="input-group-text">
             <i class="icon-mail-alt"></i>
           </span>
           <div class="form-floating">
-            <input type="text" name="e-mail" class="form-control mb-2" class="floatingInput" placeholder="E-mail">
+            <input value="<?php echo e($oldFormData['email'] ?? ''); ?>" type="text" name="email" class="form-control mb-2" class="floatingInput" placeholder="E-mail">
             <label for="floatingInput">Adres e-mail</label>
           </div>
         </div>
-
-        <div class="error">
-          <?php
-
-          if (isset($_SESSION['error_email'])) {
-            echo $_SESSION['error_email'];
-            unset($_SESSION['error_email']);
-          }
-
-          ?>
-
-        </div>
+        <?php if (array_key_exists('email', $errors)) : ?>
+          <div class="error">
+            <?php echo e($errors['email'][0]); ?>
+          </div>
+        <?php endif; ?>
 
         <div class="input-group">
           <span class="input-group-text">
             <i class="icon-lock-filled"></i>
           </span>
           <div class="form-floating">
-            <input type="password" name="password1" class="form-control mb-2" id="password1"
+            <input value="<?php echo e($oldFormData['password'] ?? ''); ?>" type="password" name="password" class="form-control mb-2" id="password1"
               placeholder="Password">
             <label for="floatingPassword">Hasło</label>
           </div>
         </div>
+        <?php if (array_key_exists('password', $errors)) : ?>
+          <div class="error">
+            <?php echo e($errors['password'][0]); ?>
+          </div>
+        <?php endif; ?>
 
         <div class="input-group">
           <span class="input-group-text">
             <i class="icon-lock-filled"></i>
           </span>
           <div class="form-floating">
-            <input type="password" name="password2" class="form-control" id="password2" placeholder="Password">
+            <input value="<?php echo e($oldFormData['confirmPassword'] ?? ''); ?>" type="password" name="confirmPassword" class="form-control mb-2" id="password2" placeholder="Password">
             <label for="floatingPassword">Powtórz hasło</label>
           </div>
         </div>
-
-        <div class="error">
-          <?php
-          if (isset($_SESSION['error_password2'])) {
-            echo $_SESSION['error_password2'];
-            unset($_SESSION['error_password2']);
-          }
-          ?>
-        </div>
-
-        <div class="error">
-          <?php
-          if (isset($_SESSION['error_password3'])) {
-            echo $_SESSION['error_password3'];
-            unset($_SESSION['error_password3']);
-          }
-          ?>
-        </div>
-
-        <div class="error">
-          <?php
-          if (isset($_SESSION['error_password1'])) {
-            echo $_SESSION['error_password1'];
-            unset($_SESSION['error_password1']);
-          }
-          ?>
-        </div>
-
-        <div class="g-recaptcha" data-sitekey="6LeWdloqAAAAAHZHEw0P1JfZ_wvMLXIvrjh0ZaaP" style="margin-top: 16px"></div>
-
-        <?php
-
-        if (isset($_SESSION['error_bot'])) {
-          echo '<div class = "error">' . $_SESSION['error_bot'] . '</div>';
-          unset($_SESSION['error_bot']);
-        }
-
-        ?>
+        <?php if (array_key_exists('confirmPassword', $errors)) : ?>
+          <div class="error">
+            <?php echo e($errors['confirmPassword'][0]); ?>
+          </div>
+        <?php endif; ?>
 
         <br />
 

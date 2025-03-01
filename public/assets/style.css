@@ -15,7 +15,7 @@ body {
 
 .background-piggybank {
   background: linear-gradient(rgba(223, 204, 204, 0.6), rgba(144, 119, 119, 0.9)),
-    url("/assets/skarbonka.jpg") no-repeat center center;
+    url("/assets/piggy.jpg") no-repeat center center;
   background-size: cover;
   width: 100%;
   height: 100vh;

@@ -22,7 +22,7 @@ class Container
     $reflectionClass = new ReflectionClass($className);
 
     if (!$reflectionClass->isInstantiable()) {
-      throw new ContainerException("Class {$className} is not instantiable.");
+      throw new ContainerException("Class {$className} is not instantiable");
     }
 
     $constructor = $reflectionClass->getConstructor();
@@ -32,6 +32,7 @@ class Container
     }
 
     $params = $constructor->getParameters();
+
     if (count($params) === 0) {
       return new $className;
     }
@@ -46,7 +47,7 @@ class Container
         throw new ContainerException("Failed to resolve class {$className} because param {$name} is missing a type hint.");
       }
 
-      if (!$type instanceof ReflectionNamedType || $type->isBuiltIn()) {
+      if (!$type instanceof ReflectionNamedType || $type->isBuiltin()) {
         throw new ContainerException("Failed to resolve class {$className} because invalid param name.");
       }
 
