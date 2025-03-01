@@ -12,5 +12,9 @@
           "src/App/Config/Routes.php",
           "src/App/Config/Middleware.php"
       ]
+  },
+  "scripts" : {
+    "budget-app-mvc": "php cli.php"
   }
+
 }
