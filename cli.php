@@ -9,5 +9,3 @@ $db = new Database('mysql', [
   'port' => 3306,
   'dbname' => 'budget_app'
 ], 'root', '');
-
-echo "Connected to the database.";
