@@ -45,4 +45,23 @@ class UserService
       throw $e;
     }
   }
+
+  public function login(array $formData)
+  {
+    $user = $this->db->query(
+      "SELECT * FROM USERS WHERE email = :email",
+      ['email' => $formData['email']]
+    )->find();
+
+    $passwordsMatch = password_verify($formData['password'], $user['password'] ?? '');
+
+    if (!$user || !$passwordsMatch) {
+      throw new ValidationException(['password' => ['Niepoprawny email i/lub hasło.']]);
+    }
+
+    session_regenerate_id();
+
+    $_SESSION['user'] = $user['id'];
+    $_SESSION['name'] = $user['name'];
+  }
 }

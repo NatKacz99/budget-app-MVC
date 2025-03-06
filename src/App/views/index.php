@@ -25,7 +25,7 @@
       <div class="buttons-logging-registration">
         <div>
           <p>Masz już konto?</p>
-          <button id="log-in">Zaloguj się</button>
+          <a href="/login"><button id="log-in">Zaloguj się</button></a>
         </div>
 
         <div class="container__sign-up">

@@ -3,7 +3,7 @@
 <body class="d-flex align-items-center py-4 justify-content-center">
 
   <main class="form-signin w-100 m-auto" style="max-width: 400px;">
-    <form method="post" action="/register">
+    <form method="post" action="">
       <h1 class="text-center pb-4">Rejestracja</h1>
 
       <div class="container">
@@ -12,7 +12,7 @@
             <i class="icon-user"></i>
           </span>
           <div class="form-floating">
-            <input value="<?php echo e($oldFormData['name'] ?? ''); ?>" type="text" name="name" class="form-control mb-2" class="floatingInput" placeholder="Name" mb-2>
+            <input value="<?php echo e($oldFormData['name'] ?? ''); ?>" type="text" name="name" class="form-control mb-2" id="floatingInput" placeholder="Name">
             <label for="floatingInput">Imię</label>
           </div>
         </div>
@@ -27,7 +27,7 @@
             <i class="icon-mail-alt"></i>
           </span>
           <div class="form-floating">
-            <input value="<?php echo e($oldFormData['email'] ?? ''); ?>" type="text" name="email" class="form-control mb-2" class="floatingInput" placeholder="E-mail">
+            <input value="<?php echo e($oldFormData['email'] ?? ''); ?>" type="text" name="email" class="form-control mb-2" id="floatingInput" placeholder="E-mail">
             <label for="floatingInput">Adres e-mail</label>
           </div>
         </div>
@@ -68,19 +68,18 @@
           </div>
         <?php endif; ?>
 
+        <div class="g-recaptcha" data-sitekey="6LepwuoqAAAAAJZicaKq-DXlT5zyvzkjjtSqHjz-" style="margin-top: 16px"></div>
         <br />
-
         <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Zarejestruj się</button>
+        <?php if (isset($_SESSION['success_message'])) : ?>
+          <div class="alert alert-success mt-3 text-center text-justify">
+            <?php echo $_SESSION['success_message']; ?>
+          </div>
+          <?php unset($_SESSION['success_message']); ?>
+        <?php endif; ?>
       </div>
-
     </form>
-    <div class="text-center mt-3">
-      <?php
-      if (isset($_SESSION['success_message'])) {
-        echo '<div class="alert alert-success">' . $_SESSION['success_message'] . '</div>';
-        unset($_SESSION['success_message']);
-      }
-      ?>
-    </div>
   </main>
 </body>
+
+</html>
