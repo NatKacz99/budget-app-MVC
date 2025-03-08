@@ -51,4 +51,10 @@ class AuthController
 
     redirectTo('/main_menu');
   }
+
+  public function logout()
+  {
+    $this->userService->logout();
+    redirectTo('/login');
+  }
 }

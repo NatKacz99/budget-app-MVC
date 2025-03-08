@@ -4,6 +4,7 @@
 
   <main class="form-signin w-100 m-auto" style="max-width: 400px;">
     <form method="post" action="">
+      <?php include $this->resolve('partials/_csrf.php') ?>
       <h1 class="text-center pb-4">Rejestracja</h1>
 
       <div class="container">

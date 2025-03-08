@@ -44,6 +44,9 @@ class UserService
     } catch (\Exception $e) {
       throw $e;
     }
+
+    session_regenerate_id();
+    $_SESSION['user'] = $this->db->id();
   }
 
   public function login(array $formData)
@@ -63,5 +66,12 @@ class UserService
 
     $_SESSION['user'] = $user['id'];
     $_SESSION['name'] = $user['name'];
+  }
+
+  public function logout()
+  {
+    unset($_SESSION['user']);
+
+    session_regenerate_id();
   }
 }
