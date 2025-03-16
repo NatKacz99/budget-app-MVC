@@ -103,24 +103,40 @@ class TransactionsService
   public function getUserIncomes(int $length, int $offset)
   {
     $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
+    $params = ['user_id' => $_SESSION['user']];
+
     $incomes = $this->db->query(
       "SELECT *, DATE_FORMAT(date_of_income, '%Y-%m-%d') as formatted_date
        FROM incomes WHERE user_id = :user_id
        LIMIT {$length} OFFSET {$offset}",
-      ['user_id' => $_SESSION['user']]
-    );
-    return $incomes->findAll();
+      $params
+    )->findAll();
+
+    $incomesCount = $this->db->query(
+      "SELECT COUNT(*)
+        FROM incomes WHERE user_id = :user_id
+        LIMIT {$length} OFFSET {$offset}",
+      $params
+    )->count();
+    return [$incomes, $incomesCount];
   }
 
   public function getUserExpenses(int $length, int $offset)
   {
     $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
+    $params = ['user_id' => $_SESSION['user']];
+
     $expenses = $this->db->query(
       "SELECT *, DATE_FORMAT(date_of_expense, '%Y-%m-%d') as formatted_date
-      FROM expenses WHERE user_id = :user_id
-      LIMIT {$length} OFFSET {$offset}",
-      ['user_id' => $_SESSION['user']]
-    );
-    return $expenses->findAll();
+      FROM expenses WHERE user_id = :user_id",
+      $params
+    )->findAll();
+
+    $expensesCount = $this->db->query(
+      "SELECT COUNT(*)
+      FROM expenses WHERE user_id = :user_id",
+      $params
+    )->count();
+    return [$expenses, $expensesCount];
   }
 }
