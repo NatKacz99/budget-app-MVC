@@ -10,6 +10,7 @@ class Database
 {
   public PDO $connection;
   public PDOStatement $stmt;
+  public array $results = [];
 
   public function __construct(string $driver, array $config, string $username, string $password)
   {
@@ -47,5 +48,12 @@ class Database
   public function id()
   {
     return $this->connection->lastInsertId();
+  }
+
+  public function fetchAllResults(): Database
+  {
+    $this->results = $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return $this;
   }
 }

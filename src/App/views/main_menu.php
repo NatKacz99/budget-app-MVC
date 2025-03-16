@@ -27,19 +27,19 @@
     <a class="nav-link" href="/">
       <div class="nav-item"><i class="icon-home"></i> Strona główna </div>
     </a>
-    <a class="nav-link" href="dodaj_przychod.php">
+    <a class="nav-link" href="/incomes">
       <div class="nav-item"><i class="icon-dollar"></i> Dodaj przychód</div>
     </a>
-    <a class="nav-link" href="dodaj_wydatek.php">
+    <a class="nav-link" href="/expenses">
       <div class="nav-item"><i class="icon-basket"></i> Dodaj wydatek </div>
     </a>
-    <a class="nav-link" href="przegladaj_bilans.php">
+    <a class="nav-link" href="/balance">
       <div class="nav-item"><i class="icon-calc"></i> Przeglądaj bilans</div>
     </a>
     <a class="nav-link" href="#">
       <div class="nav-item"><i class="icon-cog"></i> Ustawienia</div>
     </a>
-    <a class="nav-link" href="wyloguj.php">
+    <a class="nav-link" href="/logout">
       <div class="nav-item"><i class="icon-logout"></i> Wyloguj się</div>
     </a>
     </div>

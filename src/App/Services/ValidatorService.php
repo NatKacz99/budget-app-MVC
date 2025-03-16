@@ -10,6 +10,8 @@ use Framework\Rules\{
   RequiredRule,
   EmailRule,
   MatchRule,
+  PriceRule,
+  MenuRule
 };
 
 class ValidatorService
@@ -24,6 +26,8 @@ class ValidatorService
     $this->validator->add('required', new RequiredRule());
     $this->validator->add('email', new EmailRule());
     $this->validator->add('match', new MatchRule());
+    $this->validator->add('price', new PriceRule());
+    $this->validator->add('category', new MenuRule());
   }
 
   public function validateRegister(array $formData)
@@ -41,6 +45,30 @@ class ValidatorService
     $this->validator->validate($formData, [
       'email' => ['required', 'email'],
       'password' => ['required']
+    ]);
+  }
+
+  public function validateIncome(array $formData)
+  {
+    $this->validator->validate($formData, [
+      'price' => ['required', 'price'],
+      'category' => ['required', 'category']
+    ]);
+  }
+
+  public function validateExpense(array $formData)
+  {
+    $this->validator->validate($formData, [
+      'price' => ['required', 'price'],
+      'paymentMethod' => ['required', 'category'],
+      'category' => ['required', 'category']
+    ]);
+  }
+
+  public function validateBalance(array $formData)
+  {
+    $this->validator->validate($formData, [
+      'time-slot' => ['required', 'timeSlot'],
     ]);
   }
 }

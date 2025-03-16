@@ -8,7 +8,8 @@ use Framework\App;
 use App\Controllers\{
   HomeController,
   AboutController,
-  AuthController
+  AuthController,
+  TransactionController
 };
 use App\Middleware\{AuthRequiredMiddleware, GuestOnlyMiddleware};
 
@@ -22,4 +23,10 @@ function registerRoutes(App $app)
   $app->post('/login', [AuthController::class, 'login'])->add(GuestOnlyMiddleware::class);
   $app->get('/main_menu', [AuthController::class, 'mainMenuView']);
   $app->get('/logout', [AuthController::class, 'logOut'])->add(AuthRequiredMiddleware::class);
+  $app->get('/incomes', [TransactionController::class, 'createViewAddIncome']);
+  $app->post('/incomes', [TransactionController::class, 'createAddIncome']);
+  $app->get('/expenses', [TransactionController::class, 'createViewAddExpense']);
+  $app->post('/expenses', [TransactionController::class, 'createAddExpense']);
+  $app->get('/balance', [TransactionController::class, 'createViewShowBalance']);
+  $app->post('/balance', [TransactionController::class, 'createShowBalance']);
 }
