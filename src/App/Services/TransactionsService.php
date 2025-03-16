@@ -100,21 +100,25 @@ class TransactionsService
     $this->db->query($sql, $params);
   }
 
-  public function getUserIncomes()
+  public function getUserIncomes(int $length, int $offset)
   {
+    $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
     $incomes = $this->db->query(
       "SELECT *, DATE_FORMAT(date_of_income, '%Y-%m-%d') as formatted_date
-       FROM incomes WHERE user_id = :user_id",
+       FROM incomes WHERE user_id = :user_id
+       LIMIT {$length} OFFSET {$offset}",
       ['user_id' => $_SESSION['user']]
     );
     return $incomes->findAll();
   }
 
-  public function getUserExpenses()
+  public function getUserExpenses(int $length, int $offset)
   {
+    $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
     $expenses = $this->db->query(
       "SELECT *, DATE_FORMAT(date_of_expense, '%Y-%m-%d') as formatted_date
-      FROM expenses WHERE user_id = :user_id",
+      FROM expenses WHERE user_id = :user_id
+      LIMIT {$length} OFFSET {$offset}",
       ['user_id' => $_SESSION['user']]
     );
     return $expenses->findAll();

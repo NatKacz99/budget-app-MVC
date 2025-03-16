@@ -50,14 +50,30 @@ class TransactionController
 
   public function createViewShowBalance()
   {
-    $incomes = $this->transactionsService->getUserIncomes();
-    $expenses = $this->transactionsService->getUserExpenses();
+    $page = $_GET['p'] ?? 1;
+    $page = (int) $page;
+    $length = 3;
+    $offset = ($page - 1) * $length;
+    $searchTerm = $_GET['s'] ??  null;
+    $incomes = $this->transactionsService->getUserIncomes(
+      $length,
+      $offset
+    );
+    $expenses = $this->transactionsService->getUserExpenses(
+      $length,
+      $offset
+    );
 
     echo $this->view->render(
       "transactions/show_balance.php",
       [
         'incomes' => $incomes,
         'expenses' => $expenses,
+        'currentPage' => $page,
+        'previousPageQuery' => http_build_query([
+          'p' => $page - 1,
+          's' =>  $searchTerm
+        ])
       ]
     );
   }
