@@ -11,7 +11,8 @@ use Framework\Rules\{
   EmailRule,
   MatchRule,
   PriceRule,
-  MenuRule
+  MenuRule,
+  LengthMaxRule
 };
 
 class ValidatorService
@@ -28,6 +29,7 @@ class ValidatorService
     $this->validator->add('match', new MatchRule());
     $this->validator->add('price', new PriceRule());
     $this->validator->add('category', new MenuRule());
+    $this->validator->add('lengthMax', new LengthMaxRule());
   }
 
   public function validateRegister(array $formData)
@@ -52,7 +54,8 @@ class ValidatorService
   {
     $this->validator->validate($formData, [
       'price' => ['required', 'price'],
-      'category' => ['required', 'category']
+      'category' => ['required', 'category'],
+      'comment' => ['lengthMax:100']
     ]);
   }
 
@@ -61,7 +64,8 @@ class ValidatorService
     $this->validator->validate($formData, [
       'price' => ['required', 'price'],
       'paymentMethod' => ['required', 'category'],
-      'category' => ['required', 'category']
+      'category' => ['required', 'category'],
+      'comment' => ['lengthMax:100']
     ]);
   }
 

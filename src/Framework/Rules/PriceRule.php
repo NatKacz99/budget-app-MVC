@@ -12,7 +12,7 @@ class PriceRule implements RuleInterface
   {
     $price = str_replace(',', '.', $data[$field]);
 
-    return (bool) is_numeric($price) && !empty($price);
+    return is_numeric($price) && !empty($price);
   }
 
   public function getMessage(array $data, string $field, array $params): string

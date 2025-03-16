@@ -67,8 +67,13 @@
 
           <div class="input-group">
             <span class="icon-container"><i class="icon-pencil"></i></span>
-            <input type="text" name="comment" class="form-control" placeholder="Komentarz (opcjonalnie)">
+            <input value="<?php echo e($oldFormData['comment'] ?? '') ?>" type="text" name="comment" class="form-control" placeholder="Komentarz (opcjonalnie)">
           </div>
+          <?php if (array_key_exists('comment', $errors)) : ?>
+            <div class="error" style="color: red">
+              <?php echo e($errors['comment'][0]); ?>
+            </div>
+          <?php endif; ?>
 
           <div class="buttons">
             <input type="submit" value="Dodaj">

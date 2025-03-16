@@ -33,4 +33,31 @@ class TransactionsService
     );
     return $categories->fetchAllResults();
   }
+
+  public function createIncome($formData)
+  {
+    $formattedDate = "{$formData['date']} 00:00:00";
+    $income_id = $this->db->query(
+      "SELECT id FROM incomes_category_assigned_to_users WHERE user_id = :user_id AND name = :category",
+      [
+        'user_id' => $_SESSION['user'],
+        'category' => $formData['category']
+      ]
+    )->count();
+
+    if (!$income_id) {
+      die("Błąd: Nie znaleziono ID kategorii dla użytkownika {$_SESSION['user']} i kategorii {$formData['category']}");
+    }
+    $sql = "INSERT INTO incomes(user_id, income_category_assigned_to_user_id, amount, date_of_income, income_comment)
+        VALUES(:user_id, :income_id, :amount, :date_of_income, :income_comment)";
+
+    $params = [
+      'user_id' => $_SESSION['user'],
+      'income_id' => $income_id,
+      'amount' => (float) str_replace(',', '.', $formData['price']),
+      'date_of_income' => $formattedDate,
+      'income_comment' => $formData['comment']
+    ];
+    $this->db->query($sql, $params);
+  }
 }

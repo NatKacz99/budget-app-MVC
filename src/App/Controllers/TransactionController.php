@@ -27,6 +27,7 @@ class TransactionController
   public function createAddIncome()
   {
     $this->validatorService->validateIncome($_POST);
+    $this->transactionsService->createIncome($_POST);
     redirectTo('/incomes');
   }
 
