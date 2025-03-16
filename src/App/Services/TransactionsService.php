@@ -25,4 +25,12 @@ class TransactionsService
     );
     return $categories->fetchAllResults();
   }
+
+  public function selectCategoriesExpenses(): Database
+  {
+    $categories = $this->db->query(
+      "SELECT name FROM expenses_category_default"
+    );
+    return $categories->fetchAllResults();
+  }
 }

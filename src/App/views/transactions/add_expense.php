@@ -50,24 +50,20 @@
             <label for="category">
               <select class="category" name="category">
                 <option selected disabled>Wybierz kategorię wydatku</option>
-                <?php
-                foreach ($all_categories_result as $row) {
-                  echo '<option>' . htmlspecialchars($row['name']) . '</option>';
-                }
-                ?>
+                <?php foreach ($categoriesExpenses as $categoryExpenses): ?>
+                  <option value="<?= $categoryExpenses['name'] ?>"
+                    <?php echo isset($oldFormData[$categoryExpenses['name']]) && $oldFormData[$categoryExepenses['name']] === $categoryExpenses['name'] ? 'selected' : ''; ?>>
+                    <?= $categoryExpenses['name'] ?>
+                  </option>
+                <?php endforeach; ?>
               </select>
             </label>
-            <div class="error" style="color: red">
-              <?php
-
-              if (isset($_SESSION['error_category'])) {
-                echo $_SESSION['error_category'];
-                unset($_SESSION['error_category']);
-              }
-
-              ?>
-            </div>
           </div>
+          <?php if (array_key_exists('category', $errors)) : ?>
+            <div class="error" style="color: red">
+              <?php echo e($errors['category'][0]); ?>
+            </div>
+          <?php endif; ?>
 
           <div class="input-group">
             <span class="icon-container"><i class="icon-pencil"></i></span>

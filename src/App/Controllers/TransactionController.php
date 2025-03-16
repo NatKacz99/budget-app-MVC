@@ -33,14 +33,17 @@ class TransactionController
   public function createViewAddExpense()
   {
     $categoriesPaymentMethods = $this->transactionsService->selectCategoriesPaymentMethods()->results;
+    $categoriesExpenses = $this->transactionsService->selectCategoriesExpenses()->results;
     echo $this->view->render("transactions/add_expense.php", [
-      'categoriesPaymentMethods' => $categoriesPaymentMethods
+      'categoriesPaymentMethods' => $categoriesPaymentMethods,
+      'categoriesExpenses' => $categoriesExpenses
     ]);
   }
 
   public function createAddExpense()
   {
     echo $this->validatorService->validateExpense($_POST);
+    redirectTo('/expenses');
   }
 
   public function createViewShowBalance()
