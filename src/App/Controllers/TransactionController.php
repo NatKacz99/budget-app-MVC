@@ -43,17 +43,28 @@ class TransactionController
 
   public function createAddExpense()
   {
-    echo $this->validatorService->validateExpense($_POST);
+    $this->validatorService->validateExpense($_POST);
+    $this->transactionsService->createExpense($_POST);
     redirectTo('/expenses');
   }
 
   public function createViewShowBalance()
   {
-    echo $this->view->render("transactions/show_balance.php");
+    $incomes = $this->transactionsService->getUserIncomes();
+    $expenses = $this->transactionsService->getUserExpenses();
+
+    echo $this->view->render(
+      "transactions/show_balance.php",
+      [
+        'incomes' => $incomes,
+        'expenses' => $expenses,
+      ]
+    );
   }
 
   public function createShowBalance()
   {
     $this->validatorService->validateBalance($_POST);
+    redirectTo('/balance');
   }
 }

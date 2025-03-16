@@ -7,6 +7,7 @@
       <div class="container-inside">
         <section>
           <form id="form_balance" method="post">
+            <?php include $this->resolve('partials/_csrf.php') ?>
             <div class="check-period">
               <div>
                 <label for="time-slot">
@@ -57,88 +58,68 @@
                     <tr>
                       <th class="header-category">Kategoria</th>
                       <th class="header-amount">Kwota (zł)</th>
+                      <th class="header-date">Data</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php
-                    if (empty($results_incomes)) {
-                      echo "<tr><td colspan='2'>Brak wyników</td></tr>";
-                      $total_sum_incomes = 0;
-                    } else {
-                      $total_sum_incomes = 0;
-                      foreach ($results_incomes as $row) {
-                        echo "<tr>
-                                                        <td>{$row['kategoria_przychodu']}</td>
-                                                        <td>{$row['kwota_przychodu']}</td>
-                                                        </tr>";
-                        $total_sum_incomes += $row['kwota_przychodu'];
-                      }
-
-                      if ($how_many_categories_incomes > 1) {
-                        echo "<tr><td><b>Suma całkowita<b/></td><td>{$total_sum_incomes}</td></tr>";
-                      }
-                    }
-                    ?>
-                  </tbody>
-                </table>
-              </div>
-
-              <div>
-                <h3>Wydatki</h3>
-                <table>
-                  <thead>
-                    <tr>
-                      <th class="header-category">Kategoria</th>
-                      <th class="header-amount">Kwota (zł)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    if (empty($results_expenses)) {
-                      echo "<tr><td colspan='2'>Brak wyników</td></tr>";
-                      $total_sum_expenses = 0;
-                    } else {
-                      $total_sum_expenses = 0;
-                      foreach ($results_expenses as $row) {
-                        echo "<tr>
-                                                            <td>{$row['kategoria_wydatku']}</td>
-                                                            <td>{$row['kwota_wydatku']}</td>                                   
-                                                        </tr>";
-                        $total_sum_expenses += $row['kwota_wydatku'];
-                      }
-
-                      if ($how_many_categories_expenses > 1) {
-                        echo "<tr><td><b>Suma całkowita<b/></td><td>{$total_sum_expenses}</td></tr>";
-                      }
-                    }
-                    ?>
+                    <?php foreach ($incomes as $income) : ?>
+                      <tr>
+                        <td><?php echo e($income['name']) ?></td>
+                        <td><?php echo e($income['amount']) ?></td>
+                        <td><?php echo e($income['formatted_date']) ?></td>
+                      </tr>
+                    <?php endforeach; ?>
                   </tbody>
                 </table>
               </div>
             </div>
-            <div id="pie-chart-incomes-container" style="height: 300px; width: 60%;"></div>
-            <div id="pie-chart-expenses-container" style="height: 300px; width: 60%;"></div>
-
-            <div id="calculation">
-              <?php
-              $balance = $total_sum_incomes - $total_sum_expenses;
-              $balance_sheet = $balance . " zł";
-              ?>
-              <span>
-                <h3>Bilans</h3>
-                <?php if ($balance < 0) { ?>
-                  <h3 style="color: red"><?php echo $balance_sheet; ?></h3>
-                  <div id="balance-negative-message"><?php echo "Uważaj, wpadasz w długi!"; ?></div>
-                <?php } else if ($balance > 0) { ?>
-                  <h3 style="color: green"><?php echo $balance_sheet; ?></h3>
-                  <div id="balance-positive-message"><?php echo "Gratulacje. Świetnie zarządzasz finansami!"; ?></div>
-                <?php } ?>
-              </span>
-            </div>
-
           </div>
-        </section>
+
+          <div>
+            <h3>Wydatki</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th class="header-category">Kategoria</th>
+                  <th class="header-amount">Kwota (zł)</th>
+                  <th class="header-date">Data</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($expenses as $expense) : ?>
+                  <tr>
+                    <td><?php echo e($expense['name']) ?></td>
+                    <td><?php echo e($expense['amount']) ?></td>
+                    <td><?php echo e($expense['formatted_date']) ?></td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
       </div>
+      <div id="pie-chart-incomes-container" style="height: 300px; width: 60%;"></div>
+      <div id="pie-chart-expenses-container" style="height: 300px; width: 60%;"></div>
+
+      <div id="calculation">
+        <?php
+        $balance = $total_sum_incomes - $total_sum_expenses;
+        $balance_sheet = $balance . " zł";
+        ?>
+        <span>
+          <h3>Bilans</h3>
+          <?php if ($balance < 0) { ?>
+            <h3 style="color: red"><?php echo $balance_sheet; ?></h3>
+            <div id="balance-negative-message"><?php echo "Uważaj, wpadasz w długi!"; ?></div>
+          <?php } else if ($balance > 0) { ?>
+            <h3 style="color: green"><?php echo $balance_sheet; ?></h3>
+            <div id="balance-positive-message"><?php echo "Gratulacje. Świetnie zarządzasz finansami!"; ?></div>
+          <?php } ?>
+        </span>
+      </div>
+
+    </div>
+    </section>
+    </div>
     </div>
   </article>
   <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>

@@ -60,4 +60,63 @@ class TransactionsService
     ];
     $this->db->query($sql, $params);
   }
+
+  public function createExpense($formData)
+  {
+    $formattedDate = "{$formData['date']} 00:00:00";
+    $expense_id = $this->db->query(
+      "SELECT id FROM expenses_category_assigned_to_users WHERE user_id = :user_id AND name = :category",
+      [
+        'user_id' => $_SESSION['user'],
+        'category' => $formData['category']
+      ]
+    )->count();
+    if (!$expense_id) {
+      die("Błąd: Nie znaleziono ID kategorii dla użytkownika {$_SESSION['user']} i kategorii {$formData['category']}");
+    }
+
+    $payment_method_id = $this->db->query(
+      "SELECT id FROM payment_methods_assigned_to_users WHERE user_id = :user_id AND name = :paymentMethod",
+      [
+        'user_id' => $_SESSION['user'],
+        'paymentMethod' => $formData['paymentMethod']
+      ]
+    )->count();
+    if (!$payment_method_id) {
+      die("Błąd: Nie znaleziono ID metody płatności dla użytkownika {$_SESSION['user']} i kategorii {$formData['paymentMethod']}");
+    }
+
+    $sql = "INSERT INTO expenses(user_id, expense_category_assigned_to_user_id, payment_method_assigned_to_user_id, amount, date_of_expense, expense_comment)
+        VALUES(:user_id, :expense_id, :payment_method_id, :amount, :date_of_expense, :expense_comment)";
+
+    $params = [
+      'user_id' => $_SESSION['user'],
+      'expense_id' => $expense_id,
+      'payment_method_id' => $payment_method_id,
+      'amount' => (float) str_replace(',', '.', $formData['price']),
+      'date_of_expense' => $formattedDate,
+      'expense_comment' => $formData['comment']
+    ];
+    $this->db->query($sql, $params);
+  }
+
+  public function getUserIncomes()
+  {
+    $incomes = $this->db->query(
+      "SELECT *, DATE_FORMAT(date_of_income, '%Y-%m-%d') as formatted_date
+       FROM incomes WHERE user_id = :user_id",
+      ['user_id' => $_SESSION['user']]
+    );
+    return $incomes->findAll();
+  }
+
+  public function getUserExpenses()
+  {
+    $expenses = $this->db->query(
+      "SELECT *, DATE_FORMAT(date_of_expense, '%Y-%m-%d') as formatted_date
+      FROM expenses WHERE user_id = :user_id",
+      ['user_id' => $_SESSION['user']]
+    );
+    return $expenses->findAll();
+  }
 }
