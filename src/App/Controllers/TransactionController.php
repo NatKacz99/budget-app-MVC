@@ -51,20 +51,23 @@ class TransactionController
   public function createViewShowBalance()
   {
     $page = $_GET['p'] ?? 1;
-    $page = (int) $page;
+    $page = max(1, (int) $page);
     $length = 3;
     $offset = ($page - 1) * $length;
     $searchTerm = $_GET['s'] ??  null;
-    [$incomes, $count] = $this->transactionsService->getUserIncomes(
+    [$incomes, $incomesCount] = $this->transactionsService->getUserIncomes(
       $length,
       $offset
     );
-    [$expenses, $count] = $this->transactionsService->getUserExpenses(
+    [$expenses, $expensesCount] = $this->transactionsService->getUserExpenses(
       $length,
       $offset
     );
 
-    $lastPage = ceil($count / $length);
+    $totalCount = max($incomesCount, $expensesCount);
+
+    $lastPage = max(1, ceil($totalCount / $length));
+    $page = min($page, $lastPage);
     $pages = $lastPage ? range(1, $lastPage) : [];
 
     $pageLinks = array_map(
@@ -82,12 +85,12 @@ class TransactionController
         'expenses' => $expenses,
         'currentPage' => $page,
         'previousPageQuery' => http_build_query([
-          'p' => $page - 1,
+          'p' => max(1, $page - 1),
           's' =>  $searchTerm
         ]),
         'lastPage' => $lastPage,
         'nextPageQuery' => http_build_query([
-          'p' => $page + 1,
+          'p' => min($lastPage, $page + 1),
           's' => $searchTerm
         ]),
         'pageLinks' => $pageLinks,

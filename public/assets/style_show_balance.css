@@ -48,7 +48,8 @@ a {
 }
 
 input {
-  border-radius: 5px
+  border-radius: 5px;
+  margin: 0
 }
 
 option {
@@ -68,7 +69,6 @@ td {
   padding: 8px;
 }
 
-input[type="text"],
 select {
   width: 200px;
   height: 20px
@@ -96,7 +96,8 @@ form {
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 0
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .tables-incomes-expenses {
@@ -108,7 +109,13 @@ table {
   align-items: flex-start;
   background-color: rgba(155, 224, 224, 0.5);
   border-radius: 15px;
-  padding: 10px
+  padding: 10px;
+}
+
+.tables-incomes-expenses > div {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
 }
 
 td {
@@ -170,6 +177,20 @@ input[value="Wybierz okres"]:hover {
   margin-bottom: 30px;
 }
 
+.flex {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4px
+}
+
+.pagination{
+  display: flex;
+  gap: 8px;
+}
+
+ul a:hover{
+  color:rgba(41, 34, 65, 0.5)
+}
 
 @media(max-width: 768px) {
   #menu-desktop {
@@ -234,6 +255,7 @@ input[value="Wybierz okres"]:hover {
   .tables-incomes-expenses {
       display: flex;
       flex-direction: column;
+      flex-wrap: wrap;
       background-color: rgba(155, 224, 224, 0.5);
       border-radius: 15px;
       padding: 15px;
@@ -246,9 +268,11 @@ input[value="Wybierz okres"]:hover {
   }
 
   table {
-      max-width: 100%;
+      width: 100%;
+      table-layout: fixed;
       margin: 0 auto;
-      flex: 1
+      overflow-x: auto; 
+      -webkit-overflow-scrolling: touch;
   }
 
   input[type="text"]:focus {
@@ -262,18 +286,17 @@ input[value="Wybierz okres"]:hover {
 }
 
 @media(max-width: 575px) {
-  .container-outside {
-      width: 100%;
-      position: relative;
+ .container-outside {
+      max-width: 100%;
   }
 
   .container-inside {
-      width: 100%;
-      position: relative;
+      min-width: 100%;
       box-sizing: border-box;
       padding-left: 15px;
       padding-right: 15px;
-      margin: 0 auto;
+      margin: 0;
+      overflow-x: auto;
   }
 
   .check-period {
@@ -301,25 +324,28 @@ input[value="Wybierz okres"]:hover {
   }
 
   .tables-incomes-expenses {
-      flex-direction: column;
-      align-items: center;
-      background-color: rgba(155, 224, 224, 0.5);
-      border-radius: 15px;
-      padding: 10px;
-      width: 100%;
-      max-width: 100%;
-      position: relative;
-      box-sizing: border-box
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    background-color: rgba(155, 224, 224, 0.5);
+    border-radius: 15px;
+    padding: 15px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    gap: 10px;
+    align-items: center
   }
 
   table {
+      table-layout: fixed;
       width: 100%;
-      max-width: 100%;
-      margin: 0 auto
+      margin: 0 auto;
+      overflow-x: auto; 
+      -webkit-overflow-scrolling: touch;
   }
 
   input[value="Wybierz okres"] {
       margin-top: 10px
   }
-
 }
