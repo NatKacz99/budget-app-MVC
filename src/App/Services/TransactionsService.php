@@ -159,4 +159,30 @@ class TransactionsService
     )->count();
     return [$expenses, $expensesCount];
   }
+
+  public function sumIncomes($userId)
+  {
+    $result = $this->db->query(
+      "SELECT SUM(incomes.amount) AS total FROM incomes
+      WHERE incomes.user_id = :user_id",
+      [
+        'user_id' => $userId
+      ]
+    )->find();
+
+    return $result ? (float) $result['total'] : 0;
+  }
+
+  public function sumExpenses($userId)
+  {
+    $result = $this->db->query(
+      "SELECT SUM(expenses.amount) AS total FROM expenses
+      WHERE expenses.user_id = :user_id",
+      [
+        'user_id' => $userId
+      ]
+    )->find();
+
+    return $result ? (float) $result['total'] : 0;
+  }
 }

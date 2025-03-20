@@ -48,6 +48,12 @@ class TransactionController
     redirectTo('/expenses');
   }
 
+  public function createShowBalance()
+  {
+    $this->validatorService->validateBalance($_POST);
+    redirectTo('/balance');
+  }
+
   public function createViewShowBalance()
   {
     $page = $_GET['p'] ?? 1;
@@ -55,6 +61,11 @@ class TransactionController
     $length = 3;
     $offset = ($page - 1) * $length;
     $searchTerm = $_GET['s'] ??  null;
+
+    $userId = $_SESSION['user'];
+    $sumIncomes = $this->transactionsService->sumIncomes($userId);
+    $sumExpenses = $this->transactionsService->sumExpenses($userId);
+
     [$incomes, $incomesCount] = $this->transactionsService->getUserIncomes(
       $length,
       $offset
@@ -66,7 +77,7 @@ class TransactionController
 
     $totalCount = max($incomesCount, $expensesCount);
 
-    $lastPage = max(1, ceil($totalCount / $length));
+    $lastPage = (int) max(1, ceil($totalCount / $length));
     $page = min($page, $lastPage);
     $pages = $lastPage ? range(1, $lastPage) : [];
 
@@ -94,14 +105,12 @@ class TransactionController
           's' => $searchTerm
         ]),
         'pageLinks' => $pageLinks,
-        'searchTerm' => $searchTerm
+        'searchTerm' => $searchTerm,
+        'sumIncomes' => $sumIncomes,
+        'sumExpenses' => $sumExpenses,
+        'expensesCount' => $expensesCount,
+        'incomesCount' => $incomesCount
       ]
     );
-  }
-
-  public function createShowBalance()
-  {
-    $this->validatorService->validateBalance($_POST);
-    redirectTo('/balance');
   }
 }

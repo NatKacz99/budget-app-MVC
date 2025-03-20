@@ -60,7 +60,7 @@
           </form>
           <div class="balance">
             <div class="tables-incomes-expenses">
-              <div>
+              <div class="lack">
                 <h3>Przychody</h3>
                 <table>
                   <thead>
@@ -71,25 +71,31 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php if (empty($incomes)) : ?>
+                    <?php if ($incomesCount === 0) : ?>
                       <tr>
-                        <td colspan="3">Brak wyników</td>
+                        <td colspan="3"><?php echo "Brak wyników"; ?> </td>
                       </tr>
-                    <?php else : ?>
-                      <?php foreach ($incomes as $income) : ?>
-                        <tr>
-                          <td><?php echo e($income['name']); ?></td>
-                          <td><?php echo e($income['amount']); ?></td>
-                          <td><?php echo e($income['formatted_date']); ?></td>
-                        </tr>
-                      <?php endforeach; ?>
+                    <?php endif; ?>
+                    <?php foreach ($incomes as $income) : ?>
+                      <tr>
+                        <td><?php echo e($income['name']); ?></td>
+                        <td><?php echo e($income['amount']); ?></td>
+                        <td><?php echo e($income['formatted_date']); ?></td>
+                      </tr>
+                    <?php endforeach; ?>
+
+                    <?php if ($currentPage === $lastPage && $incomesCount > 1) : ?>
+                      <tr>
+                        <td colspan="2"><b>Suma całkowita</b></td>
+                        <td><?php echo $sumIncomes; ?></td>
+                      </tr>
                     <?php endif; ?>
                   </tbody>
 
                 </table>
               </div>
 
-              <div>
+              <div class="lack">
                 <h3>Wydatki</h3>
                 <table>
                   <thead>
@@ -99,19 +105,24 @@
                       <th class="header-date">Data</th>
                     </tr>
                   </thead>
+                  <?php if ($expensesCount === 0) : ?>
+                    <tr>
+                      <td colspan="3"><?php echo "Brak wyników"; ?> </td>
+                    </tr>
+                  <?php endif; ?>
                   <tbody>
-                    <?php if (empty($expenses)) : ?>
+                    <?php foreach ($expenses as $expense) : ?>
                       <tr>
-                        <td colspan="3">Brak wyników</td>
+                        <td><?php echo e($expense['name']) ?></td>
+                        <td><?php echo e($expense['amount']) ?></td>
+                        <td><?php echo e($expense['formatted_date']) ?></td>
                       </tr>
-                    <?php else : ?>
-                      <?php foreach ($expenses as $expense) : ?>
-                        <tr>
-                          <td><?php echo e($expense['name']) ?></td>
-                          <td><?php echo e($expense['amount']) ?></td>
-                          <td><?php echo e($expense['formatted_date']) ?></td>
-                        </tr>
-                      <?php endforeach; ?>
+                    <?php endforeach; ?>
+                    <?php if ($currentPage === $lastPage && $incomesCount > 1) : ?>
+                      <tr>
+                        <td colspan="2"><b>Suma całkowita</b></td>
+                        <td><?php echo $sumExpenses; ?></td>
+                      </tr>
                     <?php endif; ?>
                   </tbody>
                 </table>

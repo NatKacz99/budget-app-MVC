@@ -44,7 +44,7 @@ li {
 
 a {
   text-decoration: none;
-  color: black;
+  color: black !important;
 }
 
 input {
@@ -188,8 +188,12 @@ input[value="Wybierz okres"]:hover {
   gap: 8px;
 }
 
-ul a:hover{
-  color:rgba(41, 34, 65, 0.5)
+.pagination a:hover{
+  color: rgb(51, 49, 49) !important;
+}
+
+.pagination .active a{
+  text-decoration: underline;
 }
 
 @media(max-width: 768px) {
