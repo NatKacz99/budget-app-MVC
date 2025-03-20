@@ -185,4 +185,23 @@ class TransactionsService
 
     return $result ? (float) $result['total'] : 0;
   }
+
+  public function getIncomesSelectedPeriod($startDay, $endDay, $userId, $length, $offset)
+  {
+    $incomesPeriod = $this->db->query(
+      "SELECT incomes.amount, incomes.date_of_income, incomes_category_assigned_to_users.name, DATE_FORMAT(date_of_income, '%Y-%m-%d') as formatted_date FROM incomes 
+      JOIN incomes_category_assigned_to_users ON incomes.income_category_assigned_to_user_id = incomes_category_assigned_to_users.id
+       WHERE incomes.user_id = :user_id
+       AND incomes.date_of_income BETWEEN :startDay and :endDay
+       ORDER BY incomes.amount DESC
+       LIMIT {$length} OFFSET {$offset}",
+      [
+        'startDay' => $startDay,
+        'endDay' => $endDay,
+        'user_id' => $userId
+      ]
+    )->findAll();
+
+    return $incomesPeriod;
+  }
 }
