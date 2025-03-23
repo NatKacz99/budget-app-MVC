@@ -6,44 +6,24 @@
     <div class="container-outside">
       <div class="container-inside">
         <section>
-          <form id="form_balance" method="post">
+          <?php
+          $selected_period = $_SESSION['selected_period'] ?? '';
+          $page = $_GET['p'] ?? 1;
+          ?>
+          <form id="form_balance" method="get" action="balance">
+            <input type="hidden" name="p" value="<?= e($page); ?>">
+
             <?php include $this->resolve('partials/_csrf.php') ?>
             <div class="check-period">
-              <div>
-                <label for="time-slot">
-                  <select id="time-slot" name="time-slot" onchange="handleTimeSlotChange(this)">
-                    <option selected disabled>Wybierz okres czasu</option>
-                    <option value="bieżący_miesiąc" <?php echo $selected_period === 'bieżący_miesiąc' ? 'selected' : ''; ?>>bieżący miesiąc</option>
-                    <option value="poprzedni_miesiąc" <?php echo $selected_period === 'poprzedni_miesiąc' ? 'selected' : ''; ?>>poprzedni miesiąc</option>
-                    <option value="bieżący_rok" <?php echo $selected_period === 'bieżący_rok' ? 'selected' : ''; ?>>bieżący rok</option>
-                    <option value="niestandardowy" <?php echo $selected_period === 'niestandardowy' ? 'selected' : ''; ?>>niestandardowy</option>
-                  </select>
-                </label>
-              </div>
-
-              <?php $current_day = date('Y-m-d'); ?>
-              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                      Zakres od:
-                      <div class="input-group">
-                        <span class="icon-container"><i class="icon-calendar"></i></span>
-                        <input type="text" name="start_day" class="datepicker form-control" value="<?php echo $current_day ?>">
-                      </div>
-                      do:
-                      <div class="input-group">
-                        <span class="icon-container"><i class="icon-calendar"></i></span>
-                        <input type="text" name="end_day" class="datepicker form-control" value="<?php echo $current_day ?>">
-                      </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
-                      <button type="submit" class="btn btn-success">Zapisz zmiany</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <label for="time-slot">
+                <select id="time-slot" name="time-slot" onchange="this.form.submit()">
+                  <option selected disabled>Wybierz okres czasu</option>
+                  <option value="bieżący_miesiąc" <?= $selected_period === 'bieżący_miesiąc' ? 'selected' : ''; ?>>Bieżący miesiąc</option>
+                  <option value="poprzedni_miesiąc" <?= $selected_period === 'poprzedni_miesiąc' ? 'selected' : ''; ?>>Poprzedni miesiąc</option>
+                  <option value="bieżący_rok" <?= $selected_period === 'bieżący_rok' ? 'selected' : ''; ?>>Bieżący rok</option>
+                  <option value="niestandardowy" <?= $selected_period === 'niestandardowy' ? 'selected' : ''; ?>>Niestandardowy</option>
+                </select>
+              </label>
             </div>
           </form>
         </section>
@@ -156,6 +136,20 @@
     </div>
   </article>
   <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      let selectElement = document.getElementById("time-slot");
+
+      if (selectElement) {
+        selectElement.addEventListener("change", function() {
+          console.log("Wybrana opcja: " + this.value);
+          this.form.submit();
+        });
+      } else {
+        console.log("Element #time-slot nie został znaleziony!");
+      }
+    });
+  </script>
 </body>
 
 </html>

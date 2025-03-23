@@ -134,11 +134,15 @@ class UserService
 
     $_SESSION['user'] = $user['id'];
     $_SESSION['name'] = $user['name'];
+    unset($_SESSION['selected_period']);
+    unset($_SESSION['startDay']);
+    unset($_SESSION['endDay']);
   }
 
   public function logout()
   {
     unset($_SESSION['user']);
+    session_destroy();
 
     session_regenerate_id();
   }

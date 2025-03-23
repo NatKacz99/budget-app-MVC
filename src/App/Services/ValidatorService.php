@@ -68,11 +68,4 @@ class ValidatorService
       'comment' => ['lengthMax:100']
     ]);
   }
-
-  public function validateBalance(array $formData)
-  {
-    $this->validator->validate($formData, [
-      'time-slot' => ['required', 'timeSlot'],
-    ]);
-  }
 }
