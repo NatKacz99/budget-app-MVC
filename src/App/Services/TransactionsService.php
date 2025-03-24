@@ -284,4 +284,74 @@ class TransactionsService
 
     return $result ? (float) $result['total'] : 0;
   }
+
+  public function getCategoriesUserIncomes()
+  {
+    $param = [
+      'user_id' => $_SESSION['user']
+    ];
+
+    $incomesCategory = $this->db->query(
+      "SELECT name, SUM(amount) AS sumCategory FROM incomes
+      JOIN incomes_category_assigned_to_users ON incomes_category_assigned_to_users.id = incomes.income_category_assigned_to_user_id
+      WHERE incomes.user_id = :user_id 
+      GROUP BY income_category_assigned_to_user_id",
+      $param
+    )->findAll();
+    return $incomesCategory;
+  }
+
+  public function getCategoriesUserExpenses()
+  {
+    $param = [
+      'user_id' => $_SESSION['user']
+    ];
+
+    $expensesCategory = $this->db->query(
+      "SELECT name, SUM(amount) AS sumCategory FROM expenses
+      JOIN expenses_category_assigned_to_users ON expenses_category_assigned_to_users.id = expenses.expense_category_assigned_to_user_id
+      WHERE expenses.user_id = :user_id 
+      GROUP BY expense_category_assigned_to_user_id",
+      $param
+    )->findAll();
+    return $expensesCategory;
+  }
+
+  public function getCategoriesUserIncomesByPeriod($startDay, $endDay)
+  {
+    $param = [
+      'user_id' => $_SESSION['user'],
+      'startDay' => $startDay,
+      'endDay' => $endDay
+    ];
+
+    $incomesCategory = $this->db->query(
+      "SELECT name, SUM(amount) AS sumCategory FROM incomes
+      JOIN incomes_category_assigned_to_users ON incomes_category_assigned_to_users.id = incomes.income_category_assigned_to_user_id
+      WHERE incomes.user_id = :user_id 
+      AND incomes.date_of_income BETWEEN :startDay and :endDay
+      GROUP BY income_category_assigned_to_user_id",
+      $param
+    )->findAll();
+    return $incomesCategory;
+  }
+
+  public function getCategoriesUserExpensesByPeriod($startDay, $endDay)
+  {
+    $param = [
+      'user_id' => $_SESSION['user'],
+      'startDay' => $startDay,
+      'endDay' => $endDay
+    ];
+
+    $expensesCategory = $this->db->query(
+      "SELECT name, SUM(amount) AS sumCategory FROM expenses
+      JOIN expenses_category_assigned_to_users ON expenses_category_assigned_to_users.id = expenses.expense_category_assigned_to_user_id
+      WHERE expenses.user_id = :user_id 
+      AND expenses.date_of_expense BETWEEN :startDay and :endDay
+      GROUP BY expense_category_assigned_to_user_id",
+      $param
+    )->findAll();
+    return $expensesCategory;
+  }
 }

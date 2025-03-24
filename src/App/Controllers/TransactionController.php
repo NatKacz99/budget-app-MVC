@@ -64,13 +64,13 @@ class TransactionController
     $userId = $_SESSION['user'];
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['time-slot'])) {
       $_SESSION['selected_period'] = $_GET['time-slot'];
-      header("Location: balance?p=1");
-      exit;
 
       if ($_GET['time-slot'] === 'niestandardowy' && !empty($_GET['startDay']) && !empty($_GET['endDay'])) {
         $_SESSION['startDay'] = $_GET['startDay'];
         $_SESSION['endDay'] = $_GET['endDay'];
       }
+      header("Location: balance?p=1");
+      exit;
     }
     $selected_period = $_SESSION['selected_period'] ?? '';
 
@@ -98,6 +98,8 @@ class TransactionController
     if (!empty($startDay) && !empty($endDay)) {
       $sumIncomes = $this->transactionsService->sumIncomesByPeriod($startDay, $endDay, $userId);
       $sumExpenses = $this->transactionsService->sumExpensesByPeriod($startDay, $endDay, $userId);
+      $categoriesIncomes = $this->transactionsService->getCategoriesUserIncomesByPeriod($startDay, $endDay);
+      $categoriesExpenses = $this->transactionsService->getCategoriesUserExpensesByPeriod($startDay, $endDay);
 
       [$incomes, $incomesCount] = $this->transactionsService->getUserIncomesByPeriod(
         $startDay,
@@ -114,6 +116,8 @@ class TransactionController
     } else {
       $sumIncomes = $this->transactionsService->sumIncomes($userId);
       $sumExpenses = $this->transactionsService->sumExpenses($userId);
+      $categoriesIncomes = $this->transactionsService->getCategoriesUserIncomes();
+      $categoriesExpenses = $this->transactionsService->getCategoriesUserExpenses();
 
       [$incomes, $incomesCount] = $this->transactionsService->getUserIncomes(
         $length,
@@ -124,6 +128,39 @@ class TransactionController
         $offset
       );
     }
+
+    $dataPointsIncomes = [];
+    $total_sum_incomes = 0;
+
+    foreach ($categoriesIncomes as $row) {
+      $total_sum_incomes += $row['sumCategory'];
+    }
+
+    foreach ($categoriesIncomes as $row) {
+      if ($total_sum_incomes > 0) {
+        $dataPointsIncomes[] = array(
+          "label" => $row['name'],
+          "y" => ($row['sumCategory'] / $total_sum_incomes) * 100
+        );
+      }
+    }
+
+    $dataPointsExpenses = [];
+    $total_sum_expenses = 0;
+
+    foreach ($categoriesExpenses as $row) {
+      $total_sum_expenses += $row['sumCategory'];
+    }
+
+    foreach ($categoriesExpenses as $row) {
+      if ($total_sum_expenses > 0) {
+        $dataPointsExpenses[] = array(
+          "label" => $row['name'],
+          "y" => ($row['sumCategory'] / $total_sum_expenses) * 100
+        );
+      }
+    }
+
 
     $totalCount = max($incomesCount, $expensesCount);
 
@@ -162,7 +199,11 @@ class TransactionController
         'incomesCount' => $incomesCount,
         'selected_period' => $selected_period,
         'startDay' => $startDay,
-        'endDay' => $endDay
+        'endDay' => $endDay,
+        'dataPointsIncomes' => $dataPointsIncomes,
+        'dataPointsExpenses' => $dataPointsExpenses,
+        'categoriesIncomes' => $categoriesIncomes,
+        'categoriesExpenses' => $categoriesExpenses
       ]
     );
   }
