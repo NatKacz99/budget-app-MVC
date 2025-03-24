@@ -161,6 +161,8 @@ class TransactionController
       }
     }
 
+    $balance = $total_sum_incomes - $total_sum_expenses;
+    $balance_sheet = $balance . " zł";
 
     $totalCount = max($incomesCount, $expensesCount);
 
@@ -203,7 +205,9 @@ class TransactionController
         'dataPointsIncomes' => $dataPointsIncomes,
         'dataPointsExpenses' => $dataPointsExpenses,
         'categoriesIncomes' => $categoriesIncomes,
-        'categoriesExpenses' => $categoriesExpenses
+        'categoriesExpenses' => $categoriesExpenses,
+        'balance_sheet' => $balance_sheet,
+        'balance' => $balance
       ]
     );
   }

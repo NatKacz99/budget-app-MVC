@@ -1,7 +1,7 @@
 <section>
   <nav id="menu-desktop">
     <ul class="menu-desktop__list">
-      <li><a href="/" class="main-page"><i class="icon-home"></i>Strona główna</a></li>
+      <li><a href="/main_menu" class="main-page"><i class="icon-home"></i>Menu główne</a></li>
       <li><a href="/incomes" class="add-incoming"><i class="icon-dollar"></i>Dodaj przychód</a></li>
       <li><a href="/expenses" class="add-expense"><i class="icon-basket"></i>Dodaj wydatek</a></li>
       <li><a href="/balance" class="review-balance"><i class="icon-calc"></i>Przeglądaj bilans</a></li>
@@ -15,7 +15,7 @@
       <img src="/assets/menu_icon.svg" alt="hamburger menu">
     </button>
     <ul class="menu-mobile__list hidden">
-      <li><a href="/" class="main-page"><i class="icon-home"></i>Strona główna</a></li>
+      <li><a href="/main_menu" class="main-page"><i class="icon-home"></i>Menu główne</a></li>
       <li><a href="/incomes" class="add-incoming"><i class="icon-dollar"></i>Dodaj przychód</a></li>
       <li><a href="/expenses" class="add-expense"><i class="icon-basket"></i>Dodaj wydatek</a></li>
       <li><a href="/balance" class="review-balance"><i class="icon-calc"></i>Przeglądaj bilans</a></li>

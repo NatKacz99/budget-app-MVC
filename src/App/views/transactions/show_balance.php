@@ -61,7 +61,7 @@
           </form>
           <div class="balance">
             <div class="tables-incomes-expenses">
-              <div class="lack">
+              <div class="incomes">
                 <h3>Przychody</h3>
                 <table>
                   <thead>
@@ -72,11 +72,6 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php if ($incomesCount === 0) : ?>
-                      <tr>
-                        <td colspan="3"><?php echo "Brak wyników"; ?> </td>
-                      </tr>
-                    <?php endif; ?>
                     <?php foreach ($incomes as $income) : ?>
                       <tr>
                         <td><?php echo e($income['name']); ?></td>
@@ -85,18 +80,15 @@
                       </tr>
                     <?php endforeach; ?>
 
-                    <?php if ($currentPage === $lastPage && $incomesCount > 1) : ?>
-                      <tr>
-                        <td colspan="2"><b>Suma całkowita</b></td>
-                        <td><?php echo $sumIncomes; ?></td>
-                      </tr>
-                    <?php endif; ?>
                   </tbody>
 
                 </table>
+                <?php if ($incomesCount > 1) : ?>
+                  <b>Suma całkowita </b><?php echo e($sumIncomes); ?>
+                <?php endif; ?>
               </div>
 
-              <div class="lack">
+              <div class="expenses">
                 <h3>Wydatki</h3>
                 <table>
                   <thead>
@@ -106,31 +98,38 @@
                       <th class="header-date">Data</th>
                     </tr>
                   </thead>
-                  <?php if ($expensesCount === 0) : ?>
-                    <tr>
-                      <td colspan="3"><?php echo "Brak wyników"; ?> </td>
-                    </tr>
-                  <?php endif; ?>
                   <tbody>
                     <?php foreach ($expenses as $expense) : ?>
                       <tr>
-                        <td><?php echo e($expense['name']) ?></td>
-                        <td><?php echo e($expense['amount']) ?></td>
-                        <td><?php echo e($expense['formatted_date']) ?></td>
+                        <td><?php echo e($expense['name']); ?></td>
+                        <td><?php echo e($expense['amount']); ?></td>
+                        <td><?php echo e($expense['formatted_date']); ?></td>
                       </tr>
                     <?php endforeach; ?>
-                    <?php if ($currentPage === $lastPage && $incomesCount > 1) : ?>
-                      <tr>
-                        <td colspan="2"><b>Suma całkowita</b></td>
-                        <td><?php echo $sumExpenses; ?></td>
-                      </tr>
-                    <?php endif; ?>
+
                   </tbody>
                 </table>
+                <?php if ($expensesCount > 1) : ?>
+                  <b>Suma całkowita </b><?php echo e($sumExpenses); ?>
+                <?php endif; ?>
               </div>
             </div>
+            <p id="lack" style="display: none"><b>Brak wyników.</b></p>
             <div id="pie-chart-incomes-container" style="height: 300px; width: 60%;"></div>
             <div id="pie-chart-expenses-container" style="height: 300px; width: 60%;"></div>
+
+            <div id="calculation">
+              <span>
+                <h3>Bilans</h3>
+                <?php if ($balance < 0) { ?>
+                  <h3 style="color: red"><?php echo $balance_sheet; ?></h3>
+                  <div id="balance-negative-message"><?php echo "Uważaj, wpadasz w długi!"; ?></div>
+                <?php } else if ($balance > 0) { ?>
+                  <h3 style="color: green"><?php echo $balance_sheet; ?></h3>
+                  <div id="balance-positive-message"><?php echo "Gratulacje. Świetnie zarządzasz finansami!"; ?></div>
+                <?php } ?>
+              </span>
+            </div>
 
             <ul class="pagination">
               <!-- Poprzednia strona -->
@@ -223,19 +222,33 @@
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-      const resultsIncomes = <?php echo json_encode($categoriesIncomes); ?>;
-      const resultsExpenses = <?php echo json_encode($categoriesExpenses); ?>;
+      const resultsIncomesCategory = <?php echo json_encode($categoriesIncomes); ?>;
+      const resultsExpensesCategory = <?php echo json_encode($categoriesExpenses); ?>;
       const chartExpensesDiv = document.getElementById("pie-chart-expenses-container");
       const chartIncomesDiv = document.getElementById("pie-chart-incomes-container");
       const divTables = document.getElementsByClassName("tables-incomes-expenses")[0];
-      if ((!resultsIncomes || resultsIncomes.length === 0) && (!resultsExpenses || resultsExpenses.length === 0)) {
+      const calculationDiv = document.getElementById("calculation");
+      const resultsIncomes = <?php echo json_encode($incomes); ?>;
+      const resultsExpenses = <?php echo json_encode($expenses); ?>;
+      const divTableIncomes = document.getElementsByClassName("incomes")[0];
+      const divTableExpenses = document.getElementsByClassName("expenses")[0];
+      const lack = document.getElementById("lack");
+      if ((!resultsIncomesCategory || resultsIncomesCategory.length === 0) && (!resultsExpensesCategory || resultsExpensesCategory.length === 0)) {
         chartExpensesDiv.style.display = "none";
         chartIncomesDiv.style.display = "none";
-        divTables.style.marginBottom = "30px";
-      } else if (!resultsIncomes || resultsIncomes.length === 0) {
+        divTables.style.display = "none";
+        calculationDiv.style.display = "none";
+        lack.style.display = "block"
+      } else if (!resultsIncomesCategory || resultsIncomesCategory.length === 0) {
         chartIncomesDiv.style.display = "none";
-      } else if (!resultsExpenses || resultsExpenses.length === 0) {
+      } else if (!resultsExpensesCategory || resultsExpensesCategory.length === 0) {
         chartExpensesDiv.style.display = "none";
+      }
+      if (!resultsIncomes || resultsIncomes.length === 0) {
+        divTableIncomes.style.display = "none"
+      }
+      if (!resultsExpenses || resultsExpenses.length === 0) {
+        divTableExpenses.style.display = "none"
       }
     });
   </script>
