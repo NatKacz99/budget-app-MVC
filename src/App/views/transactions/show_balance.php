@@ -106,7 +106,6 @@
                         <td><?php echo e($expense['formatted_date']); ?></td>
                       </tr>
                     <?php endforeach; ?>
-
                   </tbody>
                 </table>
                 <?php if ($expensesCount > 1) : ?>
