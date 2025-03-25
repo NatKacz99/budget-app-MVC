@@ -7,7 +7,6 @@ namespace App\Config;
 use Framework\App;
 use App\Controllers\{
   HomeController,
-  AboutController,
   AuthController,
   TransactionController
 };
