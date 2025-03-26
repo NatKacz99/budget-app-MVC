@@ -7,9 +7,9 @@ namespace App\Config;
 use Framework\App;
 use App\Controllers\{
   HomeController,
-  AboutController,
   AuthController,
-  TransactionController
+  TransactionController,
+  ErrorController
 };
 use App\Middleware\{AuthRequiredMiddleware, GuestOnlyMiddleware};
 
@@ -28,4 +28,6 @@ function registerRoutes(App $app)
   $app->post('/expenses', [TransactionController::class, 'createAddExpense']);
   $app->get('/balance', [TransactionController::class, 'createViewShowBalance']);
   $app->post('/balance', [TransactionController::class, 'createShowBalance']);
+
+  $app->setErrorHandler([ErrorController::class, 'notFound']);
 }
