@@ -120,7 +120,7 @@ class UserService
   public function login(array $formData)
   {
     $user = $this->db->query(
-      "SELECT * FROM USERS WHERE email = :email",
+      "SELECT * FROM users WHERE email = :email",
       ['email' => $formData['email']]
     )->find();
 

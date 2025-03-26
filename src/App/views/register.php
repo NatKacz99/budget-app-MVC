@@ -73,7 +73,7 @@
               </div>
             <?php endif; ?>
 
-            <div class="g-recaptcha" data-sitekey="6LepwuoqAAAAAJZicaKq-DXlT5zyvzkjjtSqHjz-" style="margin-top: 16px"></div>
+            <div class="g-recaptcha" data-sitekey="6LcXHowqAAAAABP82-rWyDMZssMhRD3emj__Huyk" style="margin-top: 16px"></div>
             <br />
             <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Zarejestruj się</button>
             <?php if (isset($_SESSION['success_message'])) : ?>
