@@ -2,7 +2,7 @@
 
 <body class="d-flex align-items-center py-4 justify-content-center">
   <div class="container">
-    <div class="home-page-link" style="margin-bottom: 80px">
+    <div class="home-page-link" style="margin-bottom: 80px;">
       <?php include $this->resolve("partials/_navigationLoginRegister.php"); ?>
     </div>
     <div>
