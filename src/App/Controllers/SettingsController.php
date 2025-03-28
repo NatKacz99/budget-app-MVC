@@ -7,10 +7,14 @@ namespace App\Controllers;
 use Framework\TemplateEngine;
 use App\Services\{SettingsService};
 
-class TransactionController
+class SettingsController
 {
   public function __construct(
     private TemplateEngine $view,
     private SettingsService $settingsService
-  ) {}
+  ) {
+    public function editView(array $params){
+        dd($params);
+    }
+  }
 }
