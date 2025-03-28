@@ -9,7 +9,8 @@ use App\Controllers\{
   HomeController,
   AuthController,
   TransactionController,
-  ErrorController
+  ErrorController,
+  SettingsController
 };
 use App\Middleware\{AuthRequiredMiddleware, GuestOnlyMiddleware};
 

@@ -12,9 +12,9 @@ class SettingsController
   public function __construct(
     private TemplateEngine $view,
     private SettingsService $settingsService
-  ) {
-    public function editView(array $params){
-        dd($params);
-    }
+  ) {}
+  public function editView(array $params)
+  {
+    dd($params);
   }
 }
