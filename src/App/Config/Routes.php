@@ -28,6 +28,7 @@ function registerRoutes(App $app)
   $app->post('/expenses', [TransactionController::class, 'createAddExpense']);
   $app->get('/balance', [TransactionController::class, 'createViewShowBalance']);
   $app->post('/balance', [TransactionController::class, 'createShowBalance']);
+  $app->get('/settings/{expenses, incomes}', [SettingsController::class, 'editview']);
 
   $app->setErrorHandler([ErrorController::class, 'notFound']);
 }
