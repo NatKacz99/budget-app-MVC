@@ -29,7 +29,7 @@ function registerRoutes(App $app)
   $app->post('/expenses', [TransactionController::class, 'createAddExpense']);
   $app->get('/balance', [TransactionController::class, 'createViewShowBalance']);
   $app->post('/balance', [TransactionController::class, 'createShowBalance']);
-  $app->get('/settings', [SettingsController::class, 'editView']);
+  $app->get('/settings', [SettingsController::class, 'editView'])->add(AuthRequiredMiddleware::class);
 
   $app->setErrorHandler([ErrorController::class, 'notFound']);
 }

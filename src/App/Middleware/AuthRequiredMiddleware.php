@@ -10,7 +10,7 @@ class AuthRequiredMiddleware implements MiddlewareInterface
 {
   public function process(callable $next)
   {
-    if (empty($SESSION['user'])) {
+    if (empty($_SESSION['user'])) {
       redirectTo('/login');
     }
 

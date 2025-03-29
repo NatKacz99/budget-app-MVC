@@ -15,6 +15,12 @@ class SettingsController
   ) {}
   public function editView()
   {
-    echo $this->view->render("settings.php");
+    $categoriesIncomes = $this->settingsService->selectCategoriesIncomesAssignedToUsers()->results;
+    echo $this->view->render(
+      "settings.php",
+      [
+        'categoriesIncomes' => $categoriesIncomes
+      ]
+    );
   }
 }

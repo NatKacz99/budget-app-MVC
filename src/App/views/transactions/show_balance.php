@@ -43,7 +43,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
-                    <button type=" submit" class="btn btn-success">Zapisz zmiany</button>
+                    <button type="submit" class="btn btn-success">Zapisz zmiany</button>
                   </div>
                 </div>
           </form>

@@ -51,6 +51,17 @@ body {
   button{
     min-height: 40px;
   }
+
+  .edit {
+    background-color: rgb(165, 60, 19); 
+    color: white;
+    margin: 0;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .edit:hover {
+    background-color: rgb(150, 52, 14);
+  }
   
   @media(max-width: 768px) {
   

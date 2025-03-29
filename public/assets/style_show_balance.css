@@ -139,18 +139,6 @@ input[value="Wybierz okres"]:hover {
   background-color: rgb(37, 98, 24);
 }
 
-.btn-custom-close {
-  background-color: #ff6347;
-  color: #fff;
-  border-color: #ff6347;
-}
-
-.btn-custom-save {
-  background-color: #32cd32;
-  color: #fff;
-  border-color: #32cd32;
-}
-
 #balance-positive-message {
   color: green !important;
   margin-bottom: 2px
