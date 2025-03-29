@@ -23,4 +23,11 @@ class SettingsController
       ]
     );
   }
+  public function edit()
+  {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['category']) && isset($_POST['changeCategory'])) {
+      $this->settingsService->editIncomeNameCategory($_POST);
+    }
+    redirectTo('/settings');
+  }
 }

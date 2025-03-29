@@ -26,8 +26,9 @@
                 <h5 class="modal-title" id="modalEditIncomesLabel" style="text-align: center">Wybierz kategorię do edycji i wpisz nową nazwę</h5>
               </div>
               <div class="modal-body">
-                <form method="post">
-                  <input type="text">
+                <form method="post" action="/settings">
+                  <?php include $this->resolve('partials/_csrf.php') ?>
+                  <input type="text" name="changeCategory">
                   <?php if (!empty($categoriesIncomes)) : ?>
                     <?php foreach ($categoriesIncomes as $categoryIncome) : ?>
                       <div class="form-check">

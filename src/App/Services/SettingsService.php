@@ -21,4 +21,17 @@ class SettingsService
     );
     return $categories->fetchAllResults();
   }
+  public function editIncomeNameCategory($formData)
+  {
+    $this->db->query(
+      "UPDATE incomes_category_assigned_to_users 
+      SET name = :name 
+      WHERE user_id = :user_id AND name = :old_name",
+      [
+        'user_id' => $_SESSION['user'],
+        'name' => $formData['changeCategory'],
+        'old_name' => $formData['category']
+      ]
+    );
+  }
 }
