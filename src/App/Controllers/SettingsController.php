@@ -13,8 +13,8 @@ class SettingsController
     private TemplateEngine $view,
     private SettingsService $settingsService
   ) {}
-  public function editView(array $params)
+  public function editView()
   {
-    dd($params);
+    echo $this->view->render("settings.php");
   }
 }

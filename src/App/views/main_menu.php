@@ -36,7 +36,7 @@
     <a class="nav-link" href="/balance">
       <div class="nav-item"><i class="icon-calc"></i> Przeglądaj bilans</div>
     </a>
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="/settings">
       <div class="nav-item"><i class="icon-cog"></i> Ustawienia</div>
     </a>
     <a class="nav-link" href="/logout">

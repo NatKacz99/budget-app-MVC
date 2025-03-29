@@ -7,7 +7,7 @@
         <li><a href="/incomes" class="add-incoming"><i class="icon-dollar"></i>Dodaj przychód</a></li>
         <li><a href="/expenses" class="add-expense"><i class="icon-basket"></i>Dodaj wydatek</a></li>
         <li><a href="/balance" class="review-balance"><i class="icon-calc"></i>Przeglądaj bilans</a></li>
-        <li><a href="#" class="settings"><i class="icon-cog"></i>Ustawienia</a></li>
+        <li><a href="/settings" class="settings"><i class="icon-cog"></i>Ustawienia</a></li>
         <li><a href="/logout" class="log-out"><i class="icon-logout"></i>Wyloguj się</a></li>
       </ul>
   </nav>
@@ -21,7 +21,7 @@
       <li><a href="/incomes" class="add-incoming"><i class="icon-dollar"></i>Dodaj przychód</a></li>
       <li><a href="/expenses" class="add-expense"><i class="icon-basket"></i>Dodaj wydatek</a></li>
       <li><a href="/balance" class="review-balance"><i class="icon-calc"></i>Przeglądaj bilans</a></li>
-      <li><a href="#" class="settings"><i class="icon-cog"></i>Ustawienia</a></li>
+      <li><a href="/settings" class="settings"><i class="icon-cog"></i>Ustawienia</a></li>
       <li><a href="/logout" class="log-out"><i class="icon-logout"></i>Wyloguj się</a></li>
     </ul>
   </nav>
