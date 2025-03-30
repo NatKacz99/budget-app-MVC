@@ -204,13 +204,74 @@
               </div>
               <div class="modal-body">
                 <form method="post" action="/settings">
+                  <input type="hidden" name="_METHOD" value="DELETE">
                   <?php include $this->resolve('partials/_csrf.php') ?>
                   <?php if (!empty($categoriesIncomes)) : ?>
-                    <?php foreach ($categoriesIncomes as $categoryIncome) : ?>
+                    <?php foreach ($categoriesIncomes as $index => $categoryIncome) : ?>
                       <div class="form-check">
-                        <input class="form-check-input" type="radio" name="categoryIncome" value="<?php echo e($categoryIncome['name']); ?>" id="<?php echo e($categoryIncome['name']); ?>">
-                        <label class="form-check-label" for="<?php echo e($categoryIncome['name']); ?>">
+                        <input class="form-check-input" type="radio" name="categoryIncomeDeleted" value="<?php echo e($categoryIncome['name']); ?>" id="income_<?php echo e($index); ?>_<?php echo e($categoryIncome['name']); ?>">
+                        <label class="form-check-label" for="income_<?php echo e($index); ?>_<?php echo e($categoryIncome['name']); ?>">
                           <?php echo e($categoryIncome['name']); ?>
+                        </label>
+                      </div>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+                <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="modalDeleteExpenses" tabindex="-1" role="dialog" aria-labelledby="modalDeleteExpenses" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalDeleteExpensesLabel" style="text-align: center">Wybierz kategorię do usunięcia</h5>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="/settings">
+                  <input type="hidden" name="_METHOD" value="DELETE">
+                  <?php include $this->resolve('partials/_csrf.php') ?>
+                  <?php if (!empty($categoriesExpenses)) : ?>
+                    <?php foreach ($categoriesExpenses as $index => $categoryExpense) : ?>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="categoryExpenseDeleted" value="<?php echo e($categoryExpense['name']); ?>" id="income_<?php echo e($index); ?>_<?php echo e($categoryExpense['name']); ?>">
+                        <label class="form-check-label" for="income_<?php echo e($index); ?>_<?php echo e($categoryExpense['name']); ?>">
+                          <?php echo e($categoryExpense['name']); ?>
+                        </label>
+                      </div>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+                <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="modalDeletePaymentMethods" tabindex="-1" role="dialog" aria-labelledby="modalDeletePaymentMethods" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalDeletePaymentMethodsLabel" style="text-align: center">Wybierz kategorię do usunięcia</h5>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="/settings">
+                  <input type="hidden" name="_METHOD" value="DELETE">
+                  <?php include $this->resolve('partials/_csrf.php') ?>
+                  <?php if (!empty($categoriesPaymentMethods)) : ?>
+                    <?php foreach ($categoriesPaymentMethods as $index => $categoryPaymentMethod) : ?>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="categoryPaymentMethodDeleted" value="<?php echo e($categoryPaymentMethod['name']); ?>" id="paymentMethod_<?php echo e($index); ?>_<?php echo e($categoryPaymentMethod['name']); ?>">
+                        <label class="form-check-label" for="paymentMethod_<?php echo e($index); ?>_<?php echo e($categoryPaymentMethod['name']); ?>">
+                          <?php echo e($categoryPaymentMethod['name']); ?>
                         </label>
                       </div>
                     <?php endforeach; ?>

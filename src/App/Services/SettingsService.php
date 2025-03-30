@@ -115,4 +115,40 @@ class SettingsService
       ]
     );
   }
+  public function deleteIncome($formData)
+  {
+    $this->db->query(
+      "DELETE FROM incomes_category_assigned_to_users
+      WHERE user_id = :user_id
+      AND name = :deleted_name",
+      [
+        'user_id' => $_SESSION['user'],
+        'deleted_name' => $formData['categoryIncomeDeleted']
+      ]
+    );
+  }
+  public function deleteExpense($formData)
+  {
+    $this->db->query(
+      "DELETE FROM expenses_category_assigned_to_users
+      WHERE user_id = :user_id
+      AND name = :deleted_name",
+      [
+        'user_id' => $_SESSION['user'],
+        'deleted_name' => $formData['categoryExpenseDeleted']
+      ]
+    );
+  }
+  public function deletePaymentMethod($formData)
+  {
+    $this->db->query(
+      "DELETE FROM payment_methods_assigned_to_users
+      WHERE user_id = :user_id
+      AND name = :deleted_name",
+      [
+        'user_id' => $_SESSION['user'],
+        'deleted_name' => $formData['categoryPaymentMethodDeleted']
+      ]
+    );
+  }
 }
