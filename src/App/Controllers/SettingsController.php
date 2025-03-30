@@ -40,7 +40,10 @@ class SettingsController
         $this->settingsService->editPaymentMethodName($_POST);
       }
       if (isset($_POST['addedCategoryIncome'])) {
-        $this->settingsService->addedNewCategoryincome($_POST);
+        $this->settingsService->addedNewCategoryIncome($_POST);
+      }
+      if (isset($_POST['addedCategoryExpense'])) {
+        $this->settingsService->addedNewCategoryExpense($_POST);
       }
     }
     redirectTo('/settings');

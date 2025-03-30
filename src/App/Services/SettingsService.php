@@ -93,4 +93,15 @@ class SettingsService
       ]
     );
   }
+  public function addedNewCategoryExpense($formData)
+  {
+    $this->db->query(
+      "INSERT INTO expenses_category_assigned_to_users (user_id, name)
+      VALUES (:user_id, :addedCategoryExpense)",
+      [
+        'user_id' => $_SESSION['user'],
+        'addedCategoryExpense' => $formData['addedCategoryExpense']
+      ]
+    );
+  }
 }

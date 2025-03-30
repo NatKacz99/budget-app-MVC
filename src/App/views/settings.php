@@ -142,6 +142,26 @@
             </div>
           </div>
         </div>
+
+        <div class="modal fade" id="modalAddExpenses" tabindex="-1" role="dialog" aria-labelledby="modalAddExpensesLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalAddExpensesLabel" style="text-align: center">Wpisz nazwę nowej kategorii</h5>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="/settings">
+                  <?php include $this->resolve('partials/_csrf.php') ?>
+                  <input type="text" name="addedCategoryExpense">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+                <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </section>
       <div>
   </main>
