@@ -1,0 +1,196 @@
+body {
+    background-color: rgb(76, 141, 141);
+    height: 100vh;
+  }
+  
+  #menu-desktop {
+    display: flex;
+    align-items: center;
+    background-color: rgb(174, 202, 193);
+  }
+  
+  li {
+    list-style: none;
+  }
+  
+  #menu-mobile {
+    display: none;
+  }
+  
+  #menu-desktop a,
+  #menu-mobile a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+  }
+
+  h2 {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgba(14, 69, 69, 0.5);
+    width: 100%; 
+    max-width: 1200px; 
+    margin: 0 auto;
+    border-radius: 15px;
+    padding: 0 10px;
+    padding-bottom: 10px;
+  }
+
+  .edit-category-name{
+    display: flex;
+    justify-content: center;
+  }
+
+  button{
+    min-height: 40px;
+  }
+
+  .edit {
+    background-color: rgb(165, 60, 19); 
+    color: white;
+    margin: 0;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .edit:hover {
+    background-color: rgb(150, 52, 14);
+  }
+
+  .added-category-name{
+    display: flex;
+    justify-content: center;
+  }
+
+  .added {
+    background-color: rgb(128, 37, 212); 
+    color: white;
+    margin: 0;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .added:hover {
+    background-color: rgb(119, 30, 202);;
+  }
+
+  .delete-category-name{
+    display: flex;
+    justify-content: center;
+  }
+
+  .deleted {
+    background-color: #b4af29;; 
+    color: white;
+    margin: 0;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .deleted:hover {
+    background-color: #a09c26;;;
+  }
+
+  .editData{
+    background-color: rgb(248, 64, 193);
+    color: white;
+    margin: 0;
+    transition: background-color 0.3s ease; 
+  }
+
+  .editData:hover{
+    background-color: rgb(229, 55, 177);
+  }
+
+  .input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .icon-container {
+    background-color: #e9ecef;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ced4da;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    box-sizing: border-box;
+    height: 36px;
+    width: 33px
+  }
+
+  .form-control {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 0 5px 5px 0;
+    box-sizing: border-box;
+    height: 36px;
+  }
+
+  .deleteAccount{
+    background-color: rgb(21, 20, 20);
+    color: white;
+    margin: 0;
+    transition: background-color 0.3s ease
+  }
+
+  .deleteAccount:hover{
+    background-color: black;
+  }
+  
+  @media(max-width: 768px) {
+  
+    #menu-desktop {
+      display: none;
+    }
+  
+    #menu-mobile {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  
+    .menu-mobile__list {
+      position: absolute;
+      top: 40px;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      border-radius: 12px;
+      width: 200px;
+      background-color: #f1f1f1;
+      max-height: 230px;
+      overflow: hidden;
+      transition: max-height 0.5s ease-in-out;
+    }
+  
+    .menu-mobile__list>li>a {
+      display: block;
+      color: #000;
+      padding: 8px 16px;
+      text-decoration: none;
+      text-align: center;
+    }
+  
+    .menu-mobile__list>li>a:hover {
+      background-color: #555;
+      color: white;
+    }
+  
+    .menu-mobile__collapsible {
+      cursor: pointer;
+    }
+  
+    .hidden {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-out;
+    }
+  }
