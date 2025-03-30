@@ -62,6 +62,22 @@ body {
   .edit:hover {
     background-color: rgb(150, 52, 14);
   }
+
+  .added-category-name{
+    display: flex;
+    justify-content: center;
+  }
+
+  .added {
+    background-color: rgb(128, 37, 212); 
+    color: white;
+    margin: 0;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .added:hover {
+    background-color: rgb(119, 30, 202);;
+  }
   
   @media(max-width: 768px) {
   

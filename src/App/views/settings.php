@@ -49,6 +49,7 @@
             </div>
           </div>
         </div>
+
         <div class="modal fade" id="modalEditExpenses" tabindex="-1" role="dialog" aria-labelledby="modalEditExpensesLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -99,6 +100,39 @@
                       </div>
                     <?php endforeach; ?>
                   <?php endif; ?>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+                <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <h3 style="text-align: center">Dodanie nowej kategorii</h3>
+        <div class="added-category-name">
+          <button type="button" class="added" style="flex: 1" data-toggle="modal" data-target="#modalAddIncomes">
+            Przychody
+          </button>
+          <button type="button" class="added" style="flex: 1" data-toggle="modal" data-target="#modalAddExpenses">
+            Wydatki
+          </button>
+          <button type="button" class="added" style="flex: 1" data-toggle="modal" data-target="#modalAddPaymentMethods">
+            Sposoby płatności
+          </button>
+        </div>
+
+        <div class="modal fade" id="modalAddIncomes" tabindex="-1" role="dialog" aria-labelledby="modalAddIncomesLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalAddIncomesLabel" style="text-align: center">Wpisz nazwę nowej kategorii</h5>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="/settings">
+                  <?php include $this->resolve('partials/_csrf.php') ?>
+                  <input type="text" name="addedCategoryIncome">
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
