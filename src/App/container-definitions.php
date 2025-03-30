@@ -7,7 +7,8 @@ use App\Config\Paths;
 use App\Services\{
   ValidatorService,
   UserService,
-  TransactionsService
+  TransactionsService,
+  SettingsService
 };
 
 return [
@@ -27,5 +28,10 @@ return [
     $db = $container->get(Database::class);
 
     return new TransactionsService($db);
+  },
+  SettingsService::class => function (Container $container) {
+    $db = $container->get(Database::class);
+
+    return new SettingsService($db);
   }
 ];

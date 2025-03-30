@@ -6,7 +6,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Dodaj wydatek</title>
+  <title>Ustawienia</title>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -14,9 +14,8 @@
   <link href="./css/bootstrap.min.css" rel="stylesheet">
   <script src="/assets/js/bootstrap.min.js"></script>
 
-
-  <link rel="stylesheet" href="/assets/style_add_expense.css">
-  <link rel="stylesheet" href="./css/close.css">
+  <link rel="stylesheet" href="/assets/style_settings.css">
+  <link rel="stylesheet" href="/css/close.css">
 
   <script>
     $(function() {
@@ -35,4 +34,5 @@
       });
     });
   </script>
+
 </head>

@@ -1,11 +1,11 @@
 @font-face {
-  font-family: 'cap';
-  src: url('../font/cap.eot?13239279');
-  src: url('../font/cap.eot?13239279#iefix') format('embedded-opentype'),
-       url('../font/cap.woff2?13239279') format('woff2'),
-       url('../font/cap.woff?13239279') format('woff'),
-       url('../font/cap.ttf?13239279') format('truetype'),
-       url('../font/cap.svg?13239279#cap') format('svg');
+  font-family: 'close';
+  src: url('../font/close.eot?23109871');
+  src: url('../font/close.eot?23109871#iefix') format('embedded-opentype'),
+       url('../font/close.woff2?23109871') format('woff2'),
+       url('../font/close.woff?23109871') format('woff'),
+       url('../font/close.ttf?23109871') format('truetype'),
+       url('../font/close.svg?23109871#close') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -14,13 +14,13 @@
 /*
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
-    font-family: 'cap';
-    src: url('../font/cap.svg?13239279#cap') format('svg');
+    font-family: 'close';
+    src: url('../font/close.svg?23109871#close') format('svg');
   }
 }
 */
 [class^="icon-"]:before, [class*=" icon-"]:before {
-  font-family: "cap";
+  font-family: "close";
   font-style: normal;
   font-weight: normal;
   speak: never;
@@ -61,6 +61,7 @@
 .icon-user:before { content: '\e804'; } /* '' */
 .icon-pencil:before { content: '\e805'; } /* '' */
 .icon-calendar:before { content: '\e806'; } /* '' */
+.icon-cancel:before { content: '\e807'; } /* '' */
 .icon-logout:before { content: '\f02d'; } /* '' */
 .icon-mail-alt:before { content: '\f0e0'; } /* '' */
 .icon-dollar:before { content: '\f155'; } /* '' */

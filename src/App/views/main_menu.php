@@ -11,7 +11,7 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
   <link rel="stylesheet" href="/assets/style_main_menu.css">
-  <link rel="stylesheet" href="./css/cap.css">
+  <link rel="stylesheet" href="./css/close.css">
 </head>
 
 <body>
@@ -36,7 +36,7 @@
     <a class="nav-link" href="/balance">
       <div class="nav-item"><i class="icon-calc"></i> Przeglądaj bilans</div>
     </a>
-    <a class="nav-link" href="#">
+    <a class="nav-link" href="/settings">
       <div class="nav-item"><i class="icon-cog"></i> Ustawienia</div>
     </a>
     <a class="nav-link" href="/logout">

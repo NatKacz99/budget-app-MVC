@@ -13,7 +13,11 @@ class TransactionsService
   public function selectCategoriesIncomes(): Database
   {
     $categories = $this->db->query(
-      "SELECT name FROM incomes_category_default"
+      "SELECT name FROM incomes_category_assigned_to_users
+      WHERE incomes_category_assigned_to_users.user_id = :user_id",
+      [
+        'user_id' => $_SESSION['user']
+      ]
     );
     return $categories->fetchAllResults();
   }
@@ -21,7 +25,11 @@ class TransactionsService
   public function selectCategoriesPaymentMethods(): Database
   {
     $categories = $this->db->query(
-      "SELECT name FROM payment_methods_default"
+      "SELECT name FROM payment_methods_assigned_to_users
+      WHERE payment_methods_assigned_to_users.user_id = :user_id",
+      [
+        'user_id' => $_SESSION['user']
+      ]
     );
     return $categories->fetchAllResults();
   }
@@ -29,7 +37,11 @@ class TransactionsService
   public function selectCategoriesExpenses(): Database
   {
     $categories = $this->db->query(
-      "SELECT name FROM expenses_category_default"
+      "SELECT name FROM expenses_category_assigned_to_users
+      WHERE expenses_category_assigned_to_users.user_id = :user_id",
+      [
+        'user_id' => $_SESSION['user']
+      ]
     );
     return $categories->fetchAllResults();
   }
