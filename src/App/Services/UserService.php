@@ -137,6 +137,10 @@ class UserService
     unset($_SESSION['selected_period']);
     unset($_SESSION['startDay']);
     unset($_SESSION['endDay']);
+    unset($_SESSION['changeCategoryIncome']);
+    unset($_SESSION['categoryExpense']);
+    unset($_SESSION['changeCategoryExpense']);
+    unset($_SESSION['categoryIncome']);
   }
 
   public function logout()
