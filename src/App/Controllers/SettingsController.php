@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Framework\TemplateEngine;
-use App\Services\{SettingsService};
+use App\Services\{ValidatorService, SettingsService};
 
 class SettingsController
 {
   public function __construct(
     private TemplateEngine $view,
+    private ValidatorService $validatorService,
     private SettingsService $settingsService
   ) {}
   public function editView()
@@ -47,6 +48,9 @@ class SettingsController
       }
       if (isset($_POST['addedPaymentMethod'])) {
         $this->settingsService->addedNewCategoryPaymentMethod($_POST);
+      }
+      if (isset($_POST['name'])) {
+        $this->settingsService->updateUserName($_POST);
       }
     }
     redirectTo('/settings');

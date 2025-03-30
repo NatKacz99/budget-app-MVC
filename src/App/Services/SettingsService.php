@@ -151,4 +151,15 @@ class SettingsService
       ]
     );
   }
+  public function updateUserName($formData)
+  {
+    $this->db->query(
+      "UPDATE users SET name = :new_name
+      WHERE id = :user_id",
+      [
+        'user_id' => $_SESSION['user'],
+        'new_name' => $formData['name']
+      ]
+    );
+  }
 }
