@@ -59,11 +59,6 @@
                 <form method="post" action="/settings">
                   <?php include $this->resolve('partials/_csrf.php') ?>
                   <input type="text" name="changeCategoryExpense">
-                  <?php if (array_key_exists('changeCategoryExpense', $errors)) : ?>
-                    <div class="error" style="color: red">
-                      <?php echo e($errors['changeCategoryExpense'][0]); ?>
-                    </div>
-                  <?php endif; ?>
                   <?php if (!empty($categoriesExpenses)) : ?>
                     <?php foreach ($categoriesExpenses as $categoryExpense) : ?>
                       <div class="form-check">
@@ -73,11 +68,6 @@
                         </label>
                       </div>
                     <?php endforeach; ?>
-                    <?php if (array_key_exists('categoryExpense', $errors)) : ?>
-                      <div class="error" style="color: red">
-                        <?php echo e($errors['categoryExpense'][0]); ?>
-                      </div>
-                    <?php endif; ?>
                   <?php endif; ?>
               </div>
               <div class="modal-footer">
@@ -99,11 +89,6 @@
                 <form method="post" action="/settings">
                   <?php include $this->resolve('partials/_csrf.php') ?>
                   <input type="text" name="changeCategoryPaymentMethod">
-                  <?php if (array_key_exists('changeCategoryPaymentMethod', $errors)) : ?>
-                    <div class="error" style="color: red">
-                      <?php echo e($errors['changeCategoryPaymentMethod'][0]); ?>
-                    </div>
-                  <?php endif; ?>
                   <?php if (!empty($categoriesPaymentMethods)) : ?>
                     <?php foreach ($categoriesPaymentMethods as $categoryPaymentMethod) : ?>
                       <div class="form-check">
@@ -113,11 +98,6 @@
                         </label>
                       </div>
                     <?php endforeach; ?>
-                    <?php if (array_key_exists('categoryPaymentMethod', $errors)) : ?>
-                      <div class="error" style="color: red">
-                        <?php echo e($errors['categoryPaymentMethod'][0]); ?>
-                      </div>
-                    <?php endif; ?>
                   <?php endif; ?>
               </div>
               <div class="modal-footer">

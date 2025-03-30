@@ -68,14 +68,4 @@ class ValidatorService
       'comment' => ['lengthMax:100']
     ]);
   }
-
-  public function validateSettings(array $formData)
-  {
-    $this->validator->validate($formData, [
-      'changeCategoryIncome' => ['required', 'lengthMax:100'],
-      'categoryIncome' => ['required', 'category'],
-      'changeCategoryExpense' => ['required', 'lengthMax:100'],
-      'categoryExpense' => ['required', 'category']
-    ]);
-  }
 }

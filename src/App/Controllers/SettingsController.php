@@ -29,14 +29,16 @@ class SettingsController
   }
   public function edit()
   {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryIncome']) && isset($_POST['changeCategoryIncome'])) {
-      $this->settingsService->editIncomeNameCategory($_POST);
-    }
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryExpense']) && isset($_POST['changeCategoryExpense'])) {
-      $this->settingsService->editExpenseNameCategory($_POST);
-    }
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryPaymentMethod']) && isset($_POST['changeCategoryPaymentMethod'])) {
-      $this->settingsService->editPaymentMethodName($_POST);
+    if ($_SERVER['REQUEST_METHOD']) {
+      if (isset($_POST['categoryIncome']) && isset($_POST['changeCategoryIncome'])) {
+        $this->settingsService->editIncomeNameCategory($_POST);
+      }
+      if (isset($_POST['categoryExpense']) && isset($_POST['changeCategoryExpense'])) {
+        $this->settingsService->editExpenseNameCategory($_POST);
+      }
+      if (isset($_POST['categoryPaymentMethod']) && isset($_POST['changeCategoryPaymentMethod'])) {
+        $this->settingsService->editPaymentMethodName($_POST);
+      }
     }
     redirectTo('/settings');
   }
