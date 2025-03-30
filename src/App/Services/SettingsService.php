@@ -82,4 +82,15 @@ class SettingsService
       ]
     );
   }
+  public function addedNewCategoryIncome($formData)
+  {
+    $this->db->query(
+      "INSERT INTO incomes_category_assigned_to_users (user_id, name)
+      VALUES (:user_id, :addedCategoryIncome)",
+      [
+        'user_id' => $_SESSION['user'],
+        'addedCategoryIncome' => $formData['addedCategoryIncome']
+      ]
+    );
+  }
 }
