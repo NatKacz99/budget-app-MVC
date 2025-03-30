@@ -94,6 +94,45 @@ body {
   .deleted:hover {
     background-color: #a09c26;;;
   }
+
+  .editData{
+    background-color: rgb(248, 64, 193);
+    color: white;
+    margin: 0;
+    transition: background-color 0.3s ease; 
+  }
+
+  .editData:hover{
+    background-color: rgb(229, 55, 177);
+  }
+
+  .input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+  }
+
+  .icon-container {
+    background-color: #e9ecef;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ced4da;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+    box-sizing: border-box;
+    height: 36px;
+    width: 33px
+  }
+
+  .form-control {
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 0 5px 5px 0;
+    box-sizing: border-box;
+    height: 36px;
+  }
   
   @media(max-width: 768px) {
   

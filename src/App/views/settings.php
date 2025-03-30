@@ -285,6 +285,64 @@
             </div>
           </div>
         </div>
+        <hr>
+        <h3 style="text-align: center">Edycja konta użytkownika</h3>
+        <button type="button" class="editData" style="flex: 1; width: 100%" data-toggle="modal" data-target="#modalEditUserData">
+          Edytuj dane użytkownika
+        </button>
+
+        <div class="modal fade" id="modalEditUserData" tabindex="-1" role="dialog" aria-labelledby="modalEditUserData" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalEditUserDataLabel" style="text-align: center">Wprowadź nowe dane</h5>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="/settings">
+                  <div class="input-group">
+                    <span class="icon-container"><i class="icon-user"></i></span>
+                    <input value="<?php echo e($oldFormData['name'] ?? '') ?>" type="text" name="name" class="form-control" placeholder="Imię">
+                  </div>
+                  <?php if (array_key_exists('name', $errors)) : ?>
+                    <div class="error" style="color: red">
+                      <?php echo e($errors['name'][0]); ?>
+                    </div>
+                  <?php endif; ?>
+                  <div class="input-group">
+                    <span class="icon-container"><i class="icon-mail-alt"></i></span>
+                    <input value="<?php echo e($oldFormData['email'] ?? '') ?>" type="text" name="email" class="form-control" placeholder="Adres e-mail">
+                  </div>
+                  <?php if (array_key_exists('email', $errors)) : ?>
+                    <div class="error" style="color: red">
+                      <?php echo e($errors['name'][0]); ?>
+                    </div>
+                  <?php endif; ?>
+                  <div class="input-group">
+                    <span class="icon-container"><i class="icon-lock-filled"></i></span>
+                    <input value="<?php echo e($oldFormData['password'] ?? '') ?>" type="password" name="password" class="form-control" id="password1" placeholder="Nowe hasło">
+                  </div>
+                  <?php if (array_key_exists('password', $errors)) : ?>
+                    <div class="error" style="color: red">
+                      <?php echo e($errors['name'][0]); ?>
+                    </div>
+                  <?php endif; ?>
+                  <div class="input-group">
+                    <span class="icon-container"><i class="icon-lock-filled"></i></span>
+                    <input value="<?php echo e($oldFormData['password'] ?? '') ?>" type="password" name="password" class="form-control" id="password2" placeholder="Powtórz hasło">
+                  </div>
+                  <?php if (array_key_exists('confirmPassword', $errors)) : ?>
+                    <div class="error" style="color: red">
+                      <?php echo e($errors['name'][0]); ?>
+                    </div>
+                  <?php endif; ?>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+                    <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
       </section>
       <div>
   </main>
