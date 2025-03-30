@@ -72,14 +72,22 @@ class SettingsController
     if ($_SERVER['REQUEST_METHOD']) {
       if (isset($_POST['categoryIncomeDeleted'])) {
         $this->settingsService->deleteIncome($_POST);
+        redirectTo('/settings');
       }
       if (isset($_POST['categoryExpenseDeleted'])) {
         $this->settingsService->deleteExpense($_POST);
+        redirectTo('/settings');
       }
       if (isset($_POST['categoryPaymentMethodDeleted'])) {
         $this->settingsService->deletePaymentmethod($_POST);
+        redirectTo('/settings');
+      }
+      if (isset($_POST['deleteAccount'])) {
+        $this->settingsService->deleteUserAccount();
+        session_unset();
+        session_destroy();
+        redirectTo('/');
       }
     }
-    redirectTo('/settings');
   }
 }

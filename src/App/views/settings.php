@@ -311,10 +311,14 @@
             <?php echo e($errors['confirmPassword'][0]); ?>
           </div>
         <?php endif; ?>
-        <button type="button" class="deleteAccount" style="flex: 1; width: 100%">
-          <i class="icon-cancel"></i>
-          Usuń swoje konto
-        </button>
+        <form method="post">
+          <input type="hidden" name="_METHOD" value="DELETE">
+          <?php include $this->resolve('partials/_csrf.php') ?>
+          <button type="submit" name="deleteAccount" class="deleteAccount" style="flex: 1; width: 100%">
+            <i class="icon-cancel"></i>
+            Usuń swoje konto
+          </button>
+        </form>
 
         <div class="modal fade" id="modalEditUserData" tabindex="-1" role="dialog" aria-labelledby="modalEditUserData" aria-hidden="true">
           <div class="modal-dialog" role="document">
