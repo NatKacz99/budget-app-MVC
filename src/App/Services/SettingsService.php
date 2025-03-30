@@ -185,13 +185,4 @@ class SettingsService
       ]
     );
   }
-  public function deleteUserAccount()
-  {
-    $this->db->query(
-      "DELETE FROM users WHERE id = :user_id",
-      [
-        'user_id' => $_SESSION['user']
-      ]
-    );
-  }
 }

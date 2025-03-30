@@ -68,25 +68,4 @@ class ValidatorService
       'comment' => ['lengthMax:100']
     ]);
   }
-
-  public function validateEdittingUserName(array $formData)
-  {
-    $this->validator->validate($formData, [
-      'name' => ['name'],
-    ]);
-  }
-
-  public function validateEdittingUserEmail(array $formData)
-  {
-    $this->validator->validate($formData, [
-      'email' => ['email']
-    ]);
-  }
-
-  public function validatePasswordEditting(array $formData)
-  {
-    $this->validator->validate($formData, [
-      'confirmPassword' => ['match:password']
-    ]);
-  }
 }
