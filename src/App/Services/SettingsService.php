@@ -162,4 +162,27 @@ class SettingsService
       ]
     );
   }
+  public function updateUserEmail($formData)
+  {
+    $this->db->query(
+      "UPDATE users SET email = :new_email
+      WHERE id = :user_id",
+      [
+        'user_id' => $_SESSION['user'],
+        'new_email' => $formData['email']
+      ]
+    );
+  }
+  public function updateUserPassword($formData)
+  {
+    $password = password_hash($formData['password'], PASSWORD_BCRYPT, ['cost' => 12]);
+    $this->db->query(
+      "UPDATE users SET password = :new_password
+      WHERE id = :user_id",
+      [
+        'user_id' => $_SESSION['user'],
+        'new_password' => $password
+      ]
+    );
+  }
 }

@@ -68,20 +68,4 @@ class ValidatorService
       'comment' => ['lengthMax:100']
     ]);
   }
-
-  public function validateUserNameAndEmailEditted(array $formData)
-  {
-    $this->validator->validate($formData, [
-      'name' => ['name'],
-      'email' => ['email']
-    ]);
-  }
-
-  public function validateUserPasswordEditted(array $formData)
-  {
-    $this->validator->validate($formData, [
-      'password' => ['password'],
-      'confirmPassword' => ['confirmPassword']
-    ]);
-  }
 }

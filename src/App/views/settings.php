@@ -290,6 +290,24 @@
         <button type="button" class="editData" style="flex: 1; width: 100%" data-toggle="modal" data-target="#modalEditUserData">
           Edytuj dane użytkownika
         </button>
+        <?php if (isset($_SESSION['name_error_message'])) : ?>
+          <div class="error" style="color: red">
+            <?php echo $_SESSION['name_error_message']; ?>
+          </div>
+          <?php unset($_SESSION['name_error_message']); ?>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['email_error_message'])) : ?>
+          <div class="error" style="color: red">
+            <?php echo $_SESSION['email_error_message']; ?>
+          </div>
+          <?php unset($_SESSION['email_error_message']); ?>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['confirm_password_error'])) : ?>
+          <div class="error" style="color: red">
+            <?php echo $_SESSION['confirm_password_error']; ?>
+          </div>
+          <?php unset($_SESSION['confirm_password_error']); ?>
+        <?php endif; ?>
 
         <div class="modal fade" id="modalEditUserData" tabindex="-1" role="dialog" aria-labelledby="modalEditUserData" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -314,7 +332,7 @@
                   </div>
                   <div class="input-group">
                     <span class="icon-container"><i class="icon-lock-filled"></i></span>
-                    <input value="<?php echo e($oldFormData['password'] ?? '') ?>" type="password" name="password" class="form-control" id="password2" placeholder="Powtórz hasło">
+                    <input value="<?php echo e($oldFormData['confirmPassword'] ?? '') ?>" type="password" name="confirmPassword" class="form-control" id="password2" placeholder="Powtórz hasło">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>

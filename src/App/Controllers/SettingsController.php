@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Framework\TemplateEngine;
-use App\Services\{ValidatorService, SettingsService};
+use App\Services\{SettingsService};
 
 class SettingsController
 {
   public function __construct(
     private TemplateEngine $view,
-    private ValidatorService $validatorService,
     private SettingsService $settingsService
   ) {}
   public function editView()
@@ -49,8 +48,23 @@ class SettingsController
       if (isset($_POST['addedPaymentMethod'])) {
         $this->settingsService->addedNewCategoryPaymentMethod($_POST);
       }
-      if (isset($_POST['name'])) {
+      if ((!empty($_POST['name'])) && ctype_alnum($_POST['name'])) {
         $this->settingsService->updateUserName($_POST);
+      }
+      if ((!empty($_POST['name'])) && !ctype_alnum($_POST['name'])) {
+        $_SESSION['name_error_message'] = "Nazwa może składac się tylko z cyfr i liter (bez polskich znaków).";
+      }
+      if (!empty($_POST['email']) && filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        $this->settingsService->updateUserEmail($_POST);
+      }
+      if (!empty($_POST['email']) && !filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        $_SESSION['email_error_message'] = "Niepoprawny e-mail.";
+      }
+      if (!empty($_POST['password']) && !empty($_POST['confirmPassword']) && $_POST['password'] === $_POST['confirmPassword']) {
+        $this->settingsService->updateUserPassword($_POST);
+      }
+      if (!empty($_POST['password']) && empty($_POST['confirmPassword'])) {
+        $_SESSION['confirm_password_error'] = "Pole z potwierdzeniem hasła jest wymagane.";
       }
     }
     redirectTo('/settings');
