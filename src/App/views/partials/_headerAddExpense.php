@@ -16,7 +16,7 @@
 
 
   <link rel="stylesheet" href="/assets/style_add_expense.css">
-  <link rel="stylesheet" href="./css/cap.css">
+  <link rel="stylesheet" href="./css/close.css">
 
   <script>
     $(function() {

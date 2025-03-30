@@ -15,7 +15,7 @@
   <script src="/assets/js/bootstrap.min.js"></script>
 
   <link rel="stylesheet" href="/assets/style_settings.css">
-  <link rel="stylesheet" href="/css/cap.css">
+  <link rel="stylesheet" href="/css/close.css">
 
   <script>
     $(function() {

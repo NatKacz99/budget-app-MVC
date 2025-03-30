@@ -6,6 +6,7 @@
 .icon-user:before { content: '\e804'; } /* '' */
 .icon-pencil:before { content: '\e805'; } /* '' */
 .icon-calendar:before { content: '\e806'; } /* '' */
+.icon-cancel:before { content: '\e807'; } /* '' */
 .icon-logout:before { content: '\f02d'; } /* '' */
 .icon-mail-alt:before { content: '\f0e0'; } /* '' */
 .icon-dollar:before { content: '\f155'; } /* '' */

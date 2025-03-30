@@ -290,23 +290,15 @@
         <button type="button" class="editData" style="flex: 1; width: 100%" data-toggle="modal" data-target="#modalEditUserData">
           Edytuj dane użytkownika
         </button>
-        <?php if (isset($_SESSION['name_error_message'])) : ?>
+        <?php if (array_key_exists('name', $errors)) : ?>
           <div class="error" style="color: red">
-            <?php echo $_SESSION['name_error_message']; ?>
+            <?php echo e($errors['name'][0]); ?>
           </div>
-          <?php unset($_SESSION['name_error_message']); ?>
         <?php endif; ?>
-        <?php if (isset($_SESSION['email_error_message'])) : ?>
+        <?php if (array_key_exists('email', $errors)) : ?>
           <div class="error" style="color: red">
-            <?php echo $_SESSION['email_error_message']; ?>
+            <?php echo e($errors['email'][0]); ?>
           </div>
-          <?php unset($_SESSION['email_error_message']); ?>
-        <?php endif; ?>
-        <?php if (isset($_SESSION['confirm_password_error'])) : ?>
-          <div class="error" style="color: red">
-            <?php echo $_SESSION['confirm_password_error']; ?>
-          </div>
-          <?php unset($_SESSION['confirm_password_error']); ?>
         <?php endif; ?>
         <?php if (isset($_SESSION['password_error'])) : ?>
           <div class="error" style="color: red">
@@ -314,12 +306,15 @@
           </div>
           <?php unset($_SESSION['password_error']); ?>
         <?php endif; ?>
-        <?php if (isset($_SESSION['password_match_error'])) : ?>
+        <?php if (array_key_exists('confirmPassword', $errors)) : ?>
           <div class="error" style="color: red">
-            <?php echo $_SESSION['password_match_error']; ?>
+            <?php echo e($errors['confirmPassword'][0]); ?>
           </div>
-          <?php unset($_SESSION['password_match_error']); ?>
         <?php endif; ?>
+        <button type="button" class="deleteAccount" style="flex: 1; width: 100%">
+          <i class="icon-cancel"></i>
+          Usuń swoje konto
+        </button>
 
         <div class="modal fade" id="modalEditUserData" tabindex="-1" role="dialog" aria-labelledby="modalEditUserData" aria-hidden="true">
           <div class="modal-dialog" role="document">
@@ -354,6 +349,7 @@
               </div>
             </div>
           </div>
+
       </section>
       <div>
   </main>

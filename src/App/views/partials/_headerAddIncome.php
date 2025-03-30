@@ -14,7 +14,7 @@
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <script src="/assets/js/bootstrap.min.js"></script>
 
-  <link rel="stylesheet" href="/css/cap.css">
+  <link rel="stylesheet" href="/css/close.css">
   <link rel="stylesheet" href="/assets/style_add_expense.css">
 
   <script>

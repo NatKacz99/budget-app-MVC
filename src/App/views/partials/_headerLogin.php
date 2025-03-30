@@ -12,6 +12,6 @@
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
   <link rel="stylesheet" href="/assets/style_login_register.css">
-  <link rel="stylesheet" href="/css/cap.css">
+  <link rel="stylesheet" href="/css/close.css">
 
 </head>
