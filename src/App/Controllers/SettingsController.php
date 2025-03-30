@@ -64,7 +64,13 @@ class SettingsController
         $this->settingsService->updateUserPassword($_POST);
       }
       if (!empty($_POST['password']) && empty($_POST['confirmPassword'])) {
-        $_SESSION['confirm_password_error'] = "Pole z potwierdzeniem hasła jest wymagane.";
+        $_SESSION['confirm_password_error'] = "Pole z potwierdzeniem hasła nie może być puste.";
+      }
+      if (empty($_POST['password']) && !empty($_POST['confirmPassword'])) {
+        $_SESSION['password_error'] = "Pole dla nowego hasła nie może byc puste.";
+      }
+      if (!(($_POST['password']) === $_POST['confirmPassword'])) {
+        $_SESSION['password_match_error'] = "Hasła nie pasują do siebie. Spróbuj wpisać ponownie.";
       }
     }
     redirectTo('/settings');
