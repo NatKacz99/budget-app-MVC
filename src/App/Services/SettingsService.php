@@ -104,4 +104,15 @@ class SettingsService
       ]
     );
   }
+  public function addedNewCategoryPaymentMethod($formData)
+  {
+    $this->db->query(
+      "INSERT INTO payment_methods_assigned_to_users (user_id, name)
+      VALUES (:user_id, :addedPaymentMethod)",
+      [
+        'user_id' => $_SESSION['user'],
+        'addedPaymentMethod' => $formData['addedPaymentMethod']
+      ]
+    );
+  }
 }

@@ -45,6 +45,9 @@ class SettingsController
       if (isset($_POST['addedCategoryExpense'])) {
         $this->settingsService->addedNewCategoryExpense($_POST);
       }
+      if (isset($_POST['addedPaymentMethod'])) {
+        $this->settingsService->addedNewCategoryPaymentMethod($_POST);
+      }
     }
     redirectTo('/settings');
   }

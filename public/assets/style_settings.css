@@ -78,6 +78,22 @@ body {
   .added:hover {
     background-color: rgb(119, 30, 202);;
   }
+
+  .delete-category-name{
+    display: flex;
+    justify-content: center;
+  }
+
+  .deleted {
+    background-color: #b4af29;; 
+    color: white;
+    margin: 0;
+    transition: background-color 0.3s ease; 
+  }
+  
+  .deleted:hover {
+    background-color: #a09c26;;;
+  }
   
   @media(max-width: 768px) {
   
