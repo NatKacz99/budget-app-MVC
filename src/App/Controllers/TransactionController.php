@@ -55,11 +55,11 @@ class TransactionController
 
   public function createViewShowBalance()
   {
-    $page = $_GET['p'] ?? 1;
+    $page = $_GET['pageNum'] ?? 1;
     $page = max(1, (int) $page);
     $length = 3;
     $offset = ($page - 1) * $length;
-    $searchTerm = $_GET['s'] ??  null;
+    $searchTerm = $_GET['searchTerm'] ??  null;
 
     $userId = $_SESSION['user'];
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['time-slot'])) {
@@ -172,8 +172,8 @@ class TransactionController
 
     $pageLinks = array_map(
       fn($pageNum) => http_build_query([
-        'p' => $pageNum,
-        's' => $searchTerm
+        'pageNum' => $pageNum,
+        'searchTerm' => $searchTerm
       ]),
       $pages
     );
@@ -185,13 +185,13 @@ class TransactionController
         'expenses' => $expenses,
         'currentPage' => $page,
         'previousPageQuery' => http_build_query([
-          'p' => max(1, $page - 1),
-          's' =>  $searchTerm
+          'pageNum' => max(1, $page - 1),
+          'searchTerm' =>  $searchTerm
         ]),
         'lastPage' => $lastPage,
         'nextPageQuery' => http_build_query([
-          'p' => min($lastPage, $page + 1),
-          's' => $searchTerm
+          'pageNum' => min($lastPage, $page + 1),
+          'searchTerm' => $searchTerm
         ]),
         'pageLinks' => $pageLinks,
         'searchTerm' => $searchTerm,
