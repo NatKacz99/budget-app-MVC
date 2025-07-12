@@ -10,6 +10,28 @@
       <div class="container-outside">
         <div class="container-inside">
 
+          <div>
+            <label for="category">
+              <select class="category" name="category" id="categorySelect" data-limits='<?= json_encode($limitsExpenses) ?>'>
+                <option selected disabled>Wybierz kategorię wydatku</option>
+                <?php foreach ($categoriesExpenses as $categoryExpenses): ?>
+                  <option value="<?= $categoryExpenses['name'] ?>"
+                    <?php echo isset($oldFormData[$categoryExpenses['name']]) && $oldFormData[$categoryExepenses['name']] === $categoryExpenses['name'] ? 'selected' : ''; ?>>
+                    <?= $categoryExpenses['name'] ?>
+                  </option>
+                <?php endforeach; ?>
+              </select>
+            </label>
+            <div id="limitInfo" style=" display: none;">
+              <p id="limitText"></p>
+            </div>
+          </div>
+          <?php if (array_key_exists('category', $errors)) : ?>
+            <div class="error" style="color: red">
+              <?php echo e($errors['category'][0]); ?>
+            </div>
+          <?php endif; ?>
+
           <div class="input-group">
             <span class="icon-container"><i class="icon-pencil"></i></span>
             <input value="<?php echo e($oldFormData['price'] ?? '') ?>" type="text" name="price" class="form-control" placeholder="Kwota">
@@ -43,25 +65,6 @@
           <?php if (array_key_exists('paymentMethod', $errors)) : ?>
             <div class="error" style="color: red">
               <?php echo e($errors['paymentMethod'][0]); ?>
-            </div>
-          <?php endif; ?>
-
-          <div>
-            <label for="category">
-              <select class="category" name="category">
-                <option selected disabled>Wybierz kategorię wydatku</option>
-                <?php foreach ($categoriesExpenses as $categoryExpenses): ?>
-                  <option value="<?= $categoryExpenses['name'] ?>"
-                    <?php echo isset($oldFormData[$categoryExpenses['name']]) && $oldFormData[$categoryExepenses['name']] === $categoryExpenses['name'] ? 'selected' : ''; ?>>
-                    <?= $categoryExpenses['name'] ?>
-                  </option>
-                <?php endforeach; ?>
-              </select>
-            </label>
-          </div>
-          <?php if (array_key_exists('category', $errors)) : ?>
-            <div class="error" style="color: red">
-              <?php echo e($errors['category'][0]); ?>
             </div>
           <?php endif; ?>
 

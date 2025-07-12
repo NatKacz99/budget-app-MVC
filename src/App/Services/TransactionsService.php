@@ -399,4 +399,21 @@ class TransactionsService
         AND name = :category_name
     ", $param);
   }
+
+  public function getAllExpenseLimits()
+  {
+    $param = [
+      'user_id' => $_SESSION['user']
+    ];
+
+    $limits = $this->db->query("
+        SELECT name, expense_limit 
+        FROM expenses_category_assigned_to_users 
+        WHERE user_id = :user_id 
+        AND expense_limit IS NOT NULL 
+        AND expense_limit > 0
+    ", $param);
+
+    return $limits->fetchAllResults();
+  }
 }

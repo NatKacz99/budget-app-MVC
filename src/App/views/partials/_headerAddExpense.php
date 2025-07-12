@@ -34,5 +34,27 @@
         }
       });
     });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const categorySelect = document.getElementById('categorySelect');
+      const limitInfo = document.getElementById('limitInfo');
+      const limitText = document.getElementById('limitText');
+
+      if (!categorySelect) return;
+
+      const limits = JSON.parse(categorySelect.getAttribute('data-limits') || '[]');
+
+      categorySelect.addEventListener('change', function() {
+        const selectedCategory = this.value;
+        const categoryLimit = limits.find(limit => limit.name === selectedCategory);
+
+        if (categoryLimit) {
+          limitText.innerHTML = `<strong>Limit dla "${selectedCategory}":</strong> ${categoryLimit.expense_limit} zł`;
+          limitInfo.style.display = 'block';
+        } else {
+          limitInfo.style.display = 'none';
+        }
+      });
+    });
   </script>
 </head>

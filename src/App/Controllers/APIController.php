@@ -30,7 +30,7 @@ class APIController
 
     $limitData = $this->transactionsService->getExpenseLimit($category);
 
-    if (!$limitData || !$limitData['expense_limit']) {
+    if (!$limitData || !$limitData['expense_limit'] || $limitData['expense_limit'] == 0) {
       echo json_encode([
         'error' => false,
         'has_limit' => false,
