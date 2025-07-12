@@ -366,4 +366,18 @@ class TransactionsService
     )->findAll();
     return $expensesCategory;
   }
+
+  public function getExpenseLimit($category_name)
+  {
+    $param = [
+      'user_id' => $_SESSION['user'];
+      'category_name' => $category_name
+    ];
+
+    $limit = $this->db->query("SELECT limit from expenses
+      JOIN expenses_category_assigned_to_users ON expenses_category_assigned_to_users.id = expenses.expense_category_assigned_to_user_id
+      WHERE expenses.user_id = :user_id 
+      AND expenses_category_assigned_to_users = :category_name")->findAll();
+    return $limit;
+  }
 }

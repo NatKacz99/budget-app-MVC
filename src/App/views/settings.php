@@ -183,6 +183,45 @@
           </div>
         </div>
         <hr>
+        <a style="cursor: pointer; color: #333; text-decoration: none" data-toggle="modal" data-target="#limitModal">
+          <h3 style="text-align: center">Ustaw miesięczny limit kwoty wydatków dla danej kategorii</h3>
+        </a>
+
+        <div class="modal fade" id="limitModal" tabindex="-1" role="dialog" aria-labelledby="limitModal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="limitModalLabel" style="text-align: center">Wybierz kategorię do wprowadzenia limitu</h5>
+              </div>
+              <div class="modal-body">
+                <form method="post" action="/settings">
+                  <?php include $this->resolve('partials/_csrf.php') ?>
+                  <?php if (!empty($categoriesExpenses)) : ?>
+                    <?php foreach ($categoriesExpenses as $categoryExpense) : ?>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="categoryExpense" value="<?php echo e($categoryExpense['name']); ?>" id="<?php echo e($categoryExpense['name']); ?>">
+                        <label class="form-check-label" for="<?php echo e($categoryExpense['name']); ?>">
+                          <?php echo e($categoryExpense['name']); ?>
+                        </label>
+                        <input type="number" name="limit_<?php echo e($categoryExpense['name']); ?>"
+                          id="limit_<?php echo e($categoryExpense['name']); ?>"
+                          class="form-control mt-2"
+                          placeholder="Wprowadź limit"
+                          min="0"
+                          step="0.01">
+                      </div>
+                    <?php endforeach; ?>
+                  <?php endif; ?>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Zamknij</button>
+                <button type="submit" class="btn btn-success">Zapisz zmiany</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <hr>
         <h3 style="text-align: center">Usunięcie kategorii</h3>
         <div class="delete-category-name">
           <button type="button" class="deleted" style="flex: 1" data-toggle="modal" data-target="#modalDeleteIncomes">

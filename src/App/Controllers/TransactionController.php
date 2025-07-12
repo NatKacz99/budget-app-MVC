@@ -211,4 +211,6 @@ class TransactionController
       ]
     );
   }
+
+  public function setExpenseLimit() {}
 }
