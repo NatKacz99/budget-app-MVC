@@ -22,7 +22,7 @@
                 <?php endforeach; ?>
               </select>
             </label>
-            <div id="limitInfo" style=" display: none;">
+            <div id="limitInfo" style="display: none; margin: 0; padding: 0">
               <p id="limitText"></p>
             </div>
           </div>
