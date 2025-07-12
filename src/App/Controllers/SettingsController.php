@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Framework\TemplateEngine;
-use App\Services\{ValidatorService, SettingsService};
+use App\Services\{ValidatorService, SettingsService, TransactionsService};
 
 class SettingsController
 {
   public function __construct(
     private TemplateEngine $view,
     private ValidatorService $validatorService,
-    private SettingsService $settingsService
+    private SettingsService $settingsService,
+    private TransactionsService $transactionsService
   ) {}
   public function editView()
   {
@@ -63,6 +64,24 @@ class SettingsController
       }
       if (empty($_POST['password']) && !empty($_POST['confirmPassword'])) {
         $_SESSION['password_error'] = "Pole dla nowego hasła nie może byc puste.";
+      }
+
+      if (isset($_POST['categoryExpense']) && !empty($_POST['categoryExpense'])) {
+        $selectedCategory = $_POST['categoryExpense'];
+        $limitFieldName = 'limit_' . $selectedCategory;
+
+        if (isset($_POST[$limitFieldName]) && !empty($_POST[$limitFieldName])) {
+          $limitAmount = (float) $_POST[$limitFieldName];
+
+          if ($limitAmount > 0) {
+            $this->transactionsService->updateExpenseLimit($selectedCategory, $limitAmount);
+            $_SESSION['success_message'] = "Limit {$limitAmount} zł został ustawiony dla kategorii '{$selectedCategory}'";
+          } else {
+            $_SESSION['error_message'] = "Limit musi być większy od 0";
+          }
+        } else {
+          $_SESSION['error_message'] = "Nie wprowadzono kwoty limitu dla wybranej kategorii";
+        }
       }
     }
     redirectTo('/settings');

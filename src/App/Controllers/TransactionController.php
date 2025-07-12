@@ -212,5 +212,15 @@ class TransactionController
     );
   }
 
-  public function setExpenseLimit() {}
+  public function setExpenseLimit($categoryName)
+  {
+    echo json_encode($limitData = $this->transactionsService->getExpenseLimit($categoryName), JSON_UNESCAPED_UNICODE);
+
+    if (!$limitData || !isset($limitData['limit']) || $limitData['limit'] == 0) {
+      return [
+        'has_limit' => false,
+        'message' => 'Brak ustawionego limitu dla tej kategorii'
+      ];
+    }
+  }
 }
