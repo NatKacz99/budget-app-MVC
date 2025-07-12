@@ -33,7 +33,7 @@ function registerRoutes(App $app)
   $app->get('/settings', [SettingsController::class, 'editView'])->add(AuthRequiredMiddleware::class);
   $app->post('/settings', [SettingsController::class, 'edit'])->add(AuthRequiredMiddleware::class);
   $app->delete('/settings', [SettingsController::class, 'delete'])->add(AuthRequiredMiddleware::class);
-  $app->get('/api/limit?category', [APIController::class, 'getExpenseLimit']);
+  $app->get('/api/limit', [APIController::class, 'getExpenseLimit']);
 
   $app->setErrorHandler([ErrorController::class, 'notFound']);
 }

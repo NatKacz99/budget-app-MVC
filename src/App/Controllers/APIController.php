@@ -45,7 +45,7 @@ class APIController
       'has_limit' => true,
       'category' => $category,
       'limit' => $limitData['expense_limit'],
-      'message' => 'Limit wynosi: ' . $limitData['expense_limit'] . ' zł'
+      'message' => 'Limit wynosi: ' . $limitData['expense_limit'] . ' pln'
     ]);
   }
 }
