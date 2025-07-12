@@ -37,8 +37,9 @@ class Router
     $method = strtoupper($_POST['_METHOD'] ?? $method);
 
     foreach ($this->routes as $route) {
+      $matches = [];
       if (
-        !preg_match("#^{$route['path']}$#", $path) ||
+        !preg_match("#^{$route['path']}$#", $path, $matches) ||
         $route['method'] !== $method
       ) {
         continue;
@@ -50,7 +51,9 @@ class Router
         $container->resolve($class) :
         new $class;
 
-      $action = fn() => $controllerInstance->{$function}();
+      $params = array_slice($matches, 1);
+
+      $action = fn() => $controllerInstance->{$function}(...$params);
 
       $allMiddleware = [...$route['middlewares'], ...$this->middlewares];
 

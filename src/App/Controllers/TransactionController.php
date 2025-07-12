@@ -214,15 +214,26 @@ class TransactionController
     );
   }
 
-  public function setExpenseLimit($categoryName)
+  public function setExpenseLimit()
   {
-    echo json_encode($limitData = $this->transactionsService->getExpenseLimit($categoryName), JSON_UNESCAPED_UNICODE);
+    header('Content-Type: application/json');
 
-    if (!$limitData || !isset($limitData['limit']) || $limitData['limit'] == 0) {
-      return [
-        'has_limit' => false,
-        'message' => 'Brak ustawionego limitu dla tej kategorii'
-      ];
+    $categoryName = $_GET['category'] ?? null;
+
+    if (!$categoryName) {
+      echo json_encode(['error' => true, 'message' => 'Brak kategorii']);
+      return;
+    }
+
+    $limitData = $this->transactionsService->getExpenseLimit($categoryName);
+
+    if (!$limitData || !$limitData['expense_limit'] || $limitData == 0) {
+      echo json_encode(['has_limit' => false]);
+    } else {
+      echo json_encode([
+        'has_limit' => true,
+        'limit' => $limitData['expense_limit']
+      ]);
     }
   }
 }

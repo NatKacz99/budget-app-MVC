@@ -13,6 +13,7 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <link href="./css/bootstrap.min.css" rel="stylesheet">
   <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/limit.js"></script>
 
 
   <link rel="stylesheet" href="/assets/style_add_expense.css">
@@ -37,24 +38,23 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       const categorySelect = document.getElementById('categorySelect');
-      const limitInfo = document.getElementById('limitInfo');
-      const limitText = document.getElementById('limitText');
-
-      if (!categorySelect) return;
-
-      const limits = JSON.parse(categorySelect.getAttribute('data-limits') || '[]');
-
-      categorySelect.addEventListener('change', function() {
+      categorySelect.addEventListener('change', async function() {
         const selectedCategory = this.value;
-        const categoryLimit = limits.find(limit => limit.name === selectedCategory);
 
-        if (categoryLimit) {
-          limitText.innerHTML = `<strong>Limit dla "${selectedCategory}":</strong> ${categoryLimit.expense_limit} zł`;
+        if (!selectedCategory) {
+          limitInfo.style.display = 'none';
+          return;
+        }
+
+        const limitData = await getLimitForCategory(selectedCategory);
+
+        if (limitData && limitData.has_limit) {
+          limitText.innerHTML = `<strong>Limit dla "${selectedCategory}":</strong> ${limitData.limit} zł`;
           limitInfo.style.display = 'block';
         } else {
           limitInfo.style.display = 'none';
         }
-      });
+      })
     });
   </script>
 </head>
