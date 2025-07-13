@@ -84,20 +84,20 @@
           <div class="limit-panel">
             <div id="limitInfo" style="padding: 0">
               <h3 style="text-align: center">Miesięczny limit</h3>
-              <p id="limitText"></p>
+              <p id="limitText" style="text-align: center"></p>
             </div>
           </div>
           <div class="limit-panel">
             <div id="limitInfo" style="padding: 0">
               <h3 style="text-align: center">Kwota wykorzystana <br /> w wybranym miesiącu <br />
-                w ramach tej kategorii</h3>
-              <p id="usedAmountText">Wybierz kategorię aby zobaczyć wykorzystaną kwotę</p>
+                w ramach wybranej kategorii</h3>
+              <p id="usedAmountText" style="text-align: center">Wybierz kategorię aby zobaczyć wykorzystaną kwotę</p>
             </div>
           </div>
           <div class="limit-panel">
             <div id="limitInfo" style="padding: 0">
               <h3 style="text-align: center">Pozostała kwota z limitu</h3>
-              <p id="limitBalance"></p>
+              <p id="limitBalance" style="text-align: center"></p>
             </div>
           </div>
           <div>

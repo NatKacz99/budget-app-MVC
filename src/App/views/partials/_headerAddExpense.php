@@ -43,14 +43,14 @@
       const dateInput = document.querySelector('input[name="date"]');
       const usedAmountElement = document.getElementById('usedAmountText');
       const limitBalanceElement = document.getElementById('limitBalance');
+      const priceInput = document.querySelector('input[name="price"]');
 
-      console.log('dateInput element:', dateInput);
-      console.log('dateInput initial value:', dateInput ? dateInput.value : 'NULL');
+      let currentLimitData = null;
+      let currentUsedAmount = 0;
 
       async function updateUsedAmount() {
         const selectedCategory = categorySelect.value;
         const selectedDate = dateInput.value;
-
 
         if (!selectedCategory || selectedCategory === 'Wybierz kategorię wydatku') {
           usedAmountElement.innerHTML = 'Wybierz kategorię aby zobaczyć wykorzystaną kwotę';
@@ -61,7 +61,7 @@
           const response = await fetch(`/api/monthly-expenses?category=${selectedCategory}&date=${selectedDate}`);
           const data = await response.json();
 
-          console.log('API Response:', data);
+          currentUsedAmount = data.sum || 0;
 
           if (data.sum > 0) {
             usedAmountElement.innerHTML = `<strong>${data.formatted}</strong>`;
@@ -71,10 +71,11 @@
         } catch (error) {
           console.error('Błąd:', error);
           usedAmountElement.innerHTML = 'Błąd pobierania danych';
+          currentUsedAmount = 0;
         }
       }
 
-      async function updateLimitBalance() {
+      async function updateLimitBalance(additionalAmount = 0) {
         const selectedCategory = categorySelect.value;
         const selectedDate = dateInput.value;
 
@@ -84,17 +85,22 @@
         }
 
         try {
-          const response = await fetch(`/api/limit-balance?category=${selectedCategory}&date=${selectedDate}`);
-          const data = await response.json();
+          if (!currentLimitData) {
+            const response = await fetch(`/api/limit-balance?category=${selectedCategory}&date=${selectedDate}`);
+            const data = await response.json();
+            currentLimitData = data;
+          }
 
-          if (data.has_limit === false) {
+          if (currentLimitData.has_limit === false) {
             limitBalanceElement.innerHTML = '<span>Brak ustawionego limitu</span>';
-          } else if (data.has_limit === true && data.balance) {
-            const balanceValue = data.balance_raw || 0;
-            const balanceClass = balanceValue >= 0 ? 'color: rgb(17, 55, 17)' : 'color: red';
-            limitBalanceElement.innerHTML = `<span style="${balanceClass}"><strong>${data.balance}</strong></span>`;
+          } else if (currentLimitData.has_limit === true) {
+            const totalUsed = currentUsedAmount + additionalAmount;
+            const balance = currentLimitData.limit - totalUsed;
+
+            const balanceClass = balance >= 0 ? 'color: rgb(17, 55, 17)' : 'color: red';
+            limitBalanceElement.innerHTML = `<span style="${balanceClass}"><strong>${balance.toFixed(2)} zł</strong></span>`;
           } else {
-            limitBalanceElement.innerHTML = data.message || 'Błąd pobierania bilansu';
+            limitBalanceElement.innerHTML = currentLimitData.message || 'Błąd pobierania bilansu';
           }
         } catch (error) {
           console.error('Błąd:', error);
@@ -110,6 +116,9 @@
           limitText.innerHTML = 'Wymagany wybór kategorii';
           usedAmountElement.innerHTML = 'Wybierz kategorię aby zobaczyć wykorzystaną kwotę';
           limitBalanceElement.innerHTML = 'Wybierz kategorię, by zobaczyć bilans';
+
+          currentLimitData = null;
+          currentUsedAmount = 0;
           return;
         }
 
@@ -122,19 +131,41 @@
           limitText.innerHTML = 'Brak limitu dla wybranej kategorii';
         }
 
+        currentLimitData = null;
+        currentUsedAmount = 0;
+
         await updateUsedAmount();
         await updateLimitBalance();
       }
 
+      function parseInputAmount() {
+        const value = priceInput.value.trim();
+        if (!value) return 0;
+
+        const cleanValue = value.replace(',', '.');
+        const parsed = parseFloat(cleanValue);
+
+        return isNaN(parsed) ? 0 : parsed;
+      }
+
       categorySelect.addEventListener('change', updateLimitInfo);
+
       dateInput.addEventListener('change', async function() {
+        currentLimitData = null;
         await updateUsedAmount();
-        await updateLimitBalance();
+        await updateLimitBalance(parseInputAmount());
+      });
+
+      priceInput.addEventListener('input', function() {
+        const currentAmount = parseInputAmount();
+        updateLimitBalance(currentAmount);
       });
 
       $('.datepicker').on('change', function() {
-        updateUsedAmount();
-        updateLimitBalance();
+        currentLimitData = null;
+        updateUsedAmount().then(() => {
+          updateLimitBalance(parseInputAmount());
+        });
       });
 
       updateLimitInfo();
