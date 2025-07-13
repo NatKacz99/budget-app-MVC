@@ -6,14 +6,13 @@
   <article>
     <form method="post">
       <?php include $this->resolve('partials/_csrf.php') ?>
-      <h2>Wprowadź dane</h2>
       <div class="container-outside">
         <div class="container-inside">
-
+          <h2>Wprowadź dane</h2>
           <div>
             <label for="category">
               <select class="category" name="category" id="categorySelect" data-limits='<?= json_encode($limitsExpenses) ?>'>
-                <option selected disabled>Wybierz kategorię wydatku</option>
+                <option value="" selected disabled>Wybierz kategorię wydatku</option>
                 <?php foreach ($categoriesExpenses as $categoryExpenses): ?>
                   <option value="<?= $categoryExpenses['name'] ?>"
                     <?php echo isset($oldFormData[$categoryExpenses['name']]) && $oldFormData[$categoryExepenses['name']] === $categoryExpenses['name'] ? 'selected' : ''; ?>>
@@ -22,9 +21,6 @@
                 <?php endforeach; ?>
               </select>
             </label>
-            <div id="limitInfo" style="display: none; margin: 0; padding: 0">
-              <p id="limitText"></p>
-            </div>
           </div>
           <?php if (array_key_exists('category', $errors)) : ?>
             <div class="error" style="color: red">
@@ -84,7 +80,26 @@
           </div>
 
         </div>
-      </div>
+        <div class="limit-container">
+          <div class="limit-panel">
+            <div id="limitInfo" style="padding: 0">
+              <h3 style="text-align: center">Miesięczny limit</h3>
+              <p id="limitText"></p>
+            </div>
+          </div>
+          <div class="limit-panel">
+            <div id="limitInfo" style="padding: 0">
+              <h3 style="text-align: center">Kwota wykorzystana <br /> w wybranym miesiącu w ramach tej kategorii</h3>
+              <p><?= $usedAmountOfLimit ?></p>
+            </div>
+          </div>
+          <div class="limit-panel">
+            <div id="limitInfo" style="padding: 0">
+              <h3 style="text-align: center">Pozostała kwota z limitu</h3>
+            </div>
+          </div>
+          <div>
+          </div>
     </form>
 
   </article>

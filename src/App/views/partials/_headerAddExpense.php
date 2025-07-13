@@ -38,23 +38,31 @@
 
     document.addEventListener('DOMContentLoaded', function() {
       const categorySelect = document.getElementById('categorySelect');
-      categorySelect.addEventListener('change', async function() {
-        const selectedCategory = this.value;
+      const limitInfo = document.getElementById('limitInfo');
+      const limitText = document.getElementById('limitText');
 
-        if (!selectedCategory) {
-          limitInfo.style.display = 'none';
+      async function updateLimitInfo() {
+        const selectedCategory = categorySelect.value;
+
+        if (!selectedCategory || selectedCategory === '' || selectedCategory === 'Wybierz kategorię wydatku') {
+          limitInfo.style.display = 'block';
+          limitText.innerHTML = 'Wymagany wybór kategorii';
           return;
         }
 
         const limitData = await getLimitForCategory(selectedCategory);
 
-        if (limitData && limitData.has_limit) {
-          limitText.innerHTML = `<strong>Limit dla "${selectedCategory}":</strong> ${limitData.limit} zł`;
-          limitInfo.style.display = 'block';
+        limitInfo.style.display = 'block';
+
+        if (limitData && limitData.has_limit && parseFloat(limitData.limit) > 0) {
+          limitText.innerHTML = `<strong>Miesięczny limit dla "${selectedCategory}":</strong> ${limitData.limit} zł`;
         } else {
-          limitInfo.style.display = 'none';
+          limitText.innerHTML = 'Brak limitu dla wybranej kategorii';
         }
-      })
+      }
+
+      categorySelect.addEventListener('change', updateLimitInfo);
+      updateLimitInfo();
     });
   </script>
 </head>

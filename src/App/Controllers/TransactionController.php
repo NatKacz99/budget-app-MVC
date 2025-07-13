@@ -36,10 +36,16 @@ class TransactionController
     $categoriesPaymentMethods = $this->transactionsService->selectCategoriesPaymentMethods()->results;
     $categoriesExpenses = $this->transactionsService->selectCategoriesExpenses()->results;
     $limitsExpenses = $this->transactionsService->getAllExpenseLimits()->results;
+
+    $usedAmountOfLimit = null;
+    if (isset($_POST['date'])) {
+      $usedAmountOfLimit = $this->transactionsService->getMonthExpensesForCategory()->results;
+    }
     echo $this->view->render("transactions/add_expense.php", [
       'categoriesPaymentMethods' => $categoriesPaymentMethods,
       'categoriesExpenses' => $categoriesExpenses,
-      'limitsExpenses' => $limitsExpenses
+      'limitsExpenses' => $limitsExpenses,
+      'usedAmountOfLimit' => $usedAmountOfLimit
     ]);
   }
 

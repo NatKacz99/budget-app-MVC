@@ -66,9 +66,10 @@ input[value="Anuluj"]:hover {
 
 .container-outside{
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  gap: 20px;
   padding: 0 !important;
+  justify-content: center;
 }
 
 .container-inside {
@@ -91,7 +92,6 @@ input[value="Anuluj"]:hover {
 }
 
 h2 {
-  margin-top: 40px;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -139,8 +139,22 @@ h2 {
   box-shadow: 0 0 10px rgb(17, 53, 48);
 }
 
-@media(max-width: 768px) {
+.limit-container{
+  display: flex;
+  flex-direction: column;
+}
 
+.limit-panel{
+  margin-top: 40px;
+  padding: 20px;
+  background-color: rgba(14, 69, 69, 0.5);
+  border-radius: 15px;
+  width: 280px;
+  flex-shrink: 0; 
+  height: max-content;
+}
+
+@media(max-width: 768px) {
   #menu-desktop {
     display: none;
   }
@@ -186,5 +200,10 @@ h2 {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.5s ease-out;
+  }
+
+  .container-outside{
+    flex-direction: column;
+    align-items: center;
   }
 }

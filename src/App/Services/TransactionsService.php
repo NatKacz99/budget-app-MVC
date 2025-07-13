@@ -416,4 +416,28 @@ class TransactionsService
 
     return $limits->fetchAllResults();
   }
+
+  public function getMonthExpensesForCategory()
+  {
+    $user_expense_date = $_POST['date'];
+    $month = date('m', strtotime($user_expense_date));
+    $year = date('Y', strtotime($user_expense_date));
+
+    $param = [
+      'user_id' => $_SESSION['user'],
+      'month' => $month,
+      'year' => $year
+    ];
+
+    $monthSum = $this->db->query(
+      "SELECT SUM(amount) AS total
+      FROM expenses
+      WHERE user_id = :user_id
+      AND MONTH(date_of_expense) = :month
+      AND YEAR(date_of_expense) = :year",
+      $param
+    )->find();
+
+    return $monthSum;
+  }
 }
