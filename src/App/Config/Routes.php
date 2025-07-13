@@ -34,6 +34,7 @@ function registerRoutes(App $app)
   $app->delete('/settings', [SettingsController::class, 'delete'])->add(AuthRequiredMiddleware::class);
   $app->get('/api/limit', [TransactionController::class, 'setExpenseLimit']);
   $app->get('/api/monthly-expenses', [TransactionController::class, 'getMonthlyExpenseSum']);
+  $app->get('/api/limit-balance', [TransactionController::class, 'getMonthlyLimitBalance']);
 
   $app->setErrorHandler([ErrorController::class, 'notFound']);
 }

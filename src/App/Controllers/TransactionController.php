@@ -257,4 +257,26 @@ class TransactionController
       'formatted' => number_format($sum, 2) . ' zł'
     ]);
   }
+
+  public function getMonthlyLimitBalance()
+  {
+    header('Content-Type: application/json');
+
+    $date = $_GET['date'] ?? date('Y-m-d');
+    $category = $_GET['category'] ?? null;
+
+    if (!$category || $category === 'Wybierz kategorię wydatku') {
+      echo json_encode(['message' => 'Wybierz kategorię']);
+      return;
+    }
+
+    $limitData = $this->transactionsService->getExpenseLimit($category);
+    $sum = $this->transactionsService->getMonthExpensesForCategory($date, $category);
+
+    $balance = $limitData - $sum;
+
+    echo json_encode([
+      'balance' => $balance . ' zł'
+    ]);
+  }
 }

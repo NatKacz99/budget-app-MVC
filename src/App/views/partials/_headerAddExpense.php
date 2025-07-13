@@ -45,21 +45,11 @@
 
       console.log('dateInput element:', dateInput);
       console.log('dateInput initial value:', dateInput ? dateInput.value : 'NULL');
-      console.log('All inputs with name="date":', document.querySelectorAll('input[name="date"]'));
-      console.log('All inputs with class datepicker:', document.querySelectorAll('.datepicker'));
 
       async function updateUsedAmount() {
         const selectedCategory = categorySelect.value;
         const selectedDate = dateInput.value;
 
-        console.log('dateInput element check:', dateInput);
-        console.log('dateInput.value:', selectedDate);
-        console.log('Visual date field value:', document.querySelector('.datepicker')?.value);
-
-        console.log('updateUsedAmount called:', {
-          selectedCategory,
-          selectedDate
-        });
 
         if (!selectedCategory || selectedCategory === 'Wybierz kategorię wydatku') {
           usedAmountElement.innerHTML = 'Wybierz kategorię aby zobaczyć wykorzystaną kwotę';
@@ -97,7 +87,7 @@
         limitInfo.style.display = 'block';
 
         if (limitData && limitData.has_limit && parseFloat(limitData.limit) > 0) {
-          limitText.innerHTML = `<strong>Miesięczny limit dla "${selectedCategory}":</strong> ${limitData.limit} zł`;
+          limitText.innerHTML = `Miesięczny limit dla "${selectedCategory}": <strong>${limitData.limit} zł</strong>`;
         } else {
           limitText.innerHTML = 'Brak limitu dla wybranej kategorii';
         }
@@ -114,6 +104,19 @@
       });
 
       updateLimitInfo();
+
+      async function setBalanceForLimit() {
+        const selectedCategory = categorySelect.value;
+        const selectedDate = dateInput.value;
+
+        if (!selectedCategory || selectedCategory === 'Wybierz kategorię wydatku') {
+          usedAmountElement.innerHTML = 'Wybierz kategorię aby zobaczyć bilans dla limitu';
+          return;
+        }
+
+        const balance = getBalanceLimit(selectedCategory, selectedDate);
+        limitBalance.innerHTML = $balance;
+      }
     });
   </script>
 </head>
