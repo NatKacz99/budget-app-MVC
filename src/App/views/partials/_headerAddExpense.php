@@ -42,6 +42,7 @@
       const limitText = document.getElementById('limitText');
       const dateInput = document.querySelector('input[name="date"]');
       const usedAmountElement = document.getElementById('usedAmountText');
+      const limitBalanceElement = document.getElementById('limitBalance');
 
       console.log('dateInput element:', dateInput);
       console.log('dateInput initial value:', dateInput ? dateInput.value : 'NULL');
@@ -73,6 +74,34 @@
         }
       }
 
+      async function updateLimitBalance() {
+        const selectedCategory = categorySelect.value;
+        const selectedDate = dateInput.value;
+
+        if (!selectedCategory || selectedCategory === 'Wybierz kategorię wydatku') {
+          limitBalanceElement.innerHTML = 'Wybierz kategorię, by zobaczyć bilans';
+          return;
+        }
+
+        try {
+          const response = await fetch(`/api/limit-balance?category=${selectedCategory}&date=${selectedDate}`);
+          const data = await response.json();
+
+          if (data.has_limit === false) {
+            limitBalanceElement.innerHTML = '<span>Brak ustawionego limitu</span>';
+          } else if (data.has_limit === true && data.balance) {
+            const balanceValue = data.balance_raw || 0;
+            const balanceClass = balanceValue >= 0 ? 'color: rgb(17, 55, 17)' : 'color: red';
+            limitBalanceElement.innerHTML = `<span style="${balanceClass}"><strong>${data.balance}</strong></span>`;
+          } else {
+            limitBalanceElement.innerHTML = data.message || 'Błąd pobierania bilansu';
+          }
+        } catch (error) {
+          console.error('Błąd:', error);
+          limitBalanceElement.innerHTML = 'Błąd pobierania bilansu';
+        }
+      }
+
       async function updateLimitInfo() {
         const selectedCategory = categorySelect.value;
 
@@ -80,6 +109,7 @@
           limitInfo.style.display = 'block';
           limitText.innerHTML = 'Wymagany wybór kategorii';
           usedAmountElement.innerHTML = 'Wybierz kategorię aby zobaczyć wykorzystaną kwotę';
+          limitBalanceElement.innerHTML = 'Wybierz kategorię, by zobaczyć bilans';
           return;
         }
 
@@ -93,30 +123,21 @@
         }
 
         await updateUsedAmount();
+        await updateLimitBalance();
       }
 
       categorySelect.addEventListener('change', updateLimitInfo);
-      dateInput.addEventListener('change', updateUsedAmount);
+      dateInput.addEventListener('change', async function() {
+        await updateUsedAmount();
+        await updateLimitBalance();
+      });
 
       $('.datepicker').on('change', function() {
-        console.log('jQuery datepicker changed to:', this.value);
         updateUsedAmount();
+        updateLimitBalance();
       });
 
       updateLimitInfo();
-
-      async function setBalanceForLimit() {
-        const selectedCategory = categorySelect.value;
-        const selectedDate = dateInput.value;
-
-        if (!selectedCategory || selectedCategory === 'Wybierz kategorię wydatku') {
-          usedAmountElement.innerHTML = 'Wybierz kategorię aby zobaczyć bilans dla limitu';
-          return;
-        }
-
-        const balance = getBalanceLimit(selectedCategory, selectedDate);
-        limitBalance.innerHTML = $balance;
-      }
     });
   </script>
 </head>

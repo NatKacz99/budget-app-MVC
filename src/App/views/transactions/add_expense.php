@@ -97,7 +97,7 @@
           <div class="limit-panel">
             <div id="limitInfo" style="padding: 0">
               <h3 style="text-align: center">Pozostała kwota z limitu</h3>
-              <p id="limitBalance">Wybierz kategorię, by zobaczyć bilans</p>
+              <p id="limitBalance"></p>
             </div>
           </div>
           <div>

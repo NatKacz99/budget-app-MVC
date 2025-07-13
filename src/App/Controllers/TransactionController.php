@@ -271,12 +271,29 @@ class TransactionController
     }
 
     $limitData = $this->transactionsService->getExpenseLimit($category);
+    if (
+      !$limitData ||
+      !isset($limitData['expense_limit']) ||
+      $limitData['expense_limit'] === null ||
+      (float)$limitData['expense_limit'] <= 0
+    ) {
+
+      echo json_encode([
+        'has_limit' => false,
+        'message' => 'Brak ustawionego limitu dla tej kategorii'
+      ]);
+      return;
+    }
     $sum = $this->transactionsService->getMonthExpensesForCategory($date, $category);
 
-    $balance = $limitData - $sum;
+    $balance = (float)$limitData['expense_limit'] - $sum;
 
     echo json_encode([
-      'balance' => $balance . ' zł'
+      'has_limit' => true,
+      'balance' => number_format($balance, 2) . ' zł',
+      'balance_raw' => $balance,
+      'limit' => (float)$limitData['expense_limit'],
+      'used' => $sum
     ]);
   }
 }
