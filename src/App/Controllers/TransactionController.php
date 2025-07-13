@@ -37,15 +37,10 @@ class TransactionController
     $categoriesExpenses = $this->transactionsService->selectCategoriesExpenses()->results;
     $limitsExpenses = $this->transactionsService->getAllExpenseLimits()->results;
 
-    $usedAmountOfLimit = null;
-    if (isset($_POST['date'])) {
-      $usedAmountOfLimit = $this->transactionsService->getMonthExpensesForCategory()->results;
-    }
     echo $this->view->render("transactions/add_expense.php", [
       'categoriesPaymentMethods' => $categoriesPaymentMethods,
       'categoriesExpenses' => $categoriesExpenses,
       'limitsExpenses' => $limitsExpenses,
-      'usedAmountOfLimit' => $usedAmountOfLimit
     ]);
   }
 
@@ -241,5 +236,25 @@ class TransactionController
         'limit' => $limitData['expense_limit']
       ]);
     }
+  }
+
+  public function getMonthlyExpenseSum()
+  {
+    header('Content-Type: application/json');
+
+    $date = $_GET['date'] ?? date('Y-m-d');
+    $category = $_GET['category'] ?? null;
+
+    if (!$category || $category === 'Wybierz kategorię wydatku') {
+      echo json_encode(['sum' => 0, 'message' => 'Wybierz kategorię']);
+      return;
+    }
+
+    $sum = $this->transactionsService->getMonthExpensesForCategory($date, $category);
+
+    echo json_encode([
+      'sum' => $sum,
+      'formatted' => number_format($sum, 2) . ' zł'
+    ]);
   }
 }

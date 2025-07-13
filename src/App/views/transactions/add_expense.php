@@ -89,8 +89,9 @@
           </div>
           <div class="limit-panel">
             <div id="limitInfo" style="padding: 0">
-              <h3 style="text-align: center">Kwota wykorzystana <br /> w wybranym miesiącu w ramach tej kategorii</h3>
-              <p><?= $usedAmountOfLimit ?></p>
+              <h3 style="text-align: center">Kwota wykorzystana <br /> w wybranym miesiącu <br />
+                w ramach tej kategorii</h3>
+              <p id="usedAmountText">Wybierz kategorię aby zobaczyć wykorzystaną kwotę</p>
             </div>
           </div>
           <div class="limit-panel">

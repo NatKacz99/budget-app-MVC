@@ -417,27 +417,29 @@ class TransactionsService
     return $limits->fetchAllResults();
   }
 
-  public function getMonthExpensesForCategory()
+  public function getMonthExpensesForCategory($date, $category)
   {
-    $user_expense_date = $_POST['date'];
-    $month = date('m', strtotime($user_expense_date));
-    $year = date('Y', strtotime($user_expense_date));
+    $month = date('m', strtotime($date));
+    $year = date('Y', strtotime($date));
 
-    $param = [
-      'user_id' => $_SESSION['user'],
-      'month' => $month,
-      'year' => $year
-    ];
+    error_log("Debug SQL: month=$month, year=$year, category=$category, user_id=" . $_SESSION['user']);
 
-    $monthSum = $this->db->query(
-      "SELECT SUM(amount) AS total
-      FROM expenses
-      WHERE user_id = :user_id
-      AND MONTH(date_of_expense) = :month
-      AND YEAR(date_of_expense) = :year",
-      $param
+    $result = $this->db->query(
+      "SELECT SUM(e.amount) AS total 
+         FROM expenses e
+         JOIN expenses_category_assigned_to_users ec ON e.expense_category_assigned_to_user_id = ec.id
+         WHERE e.user_id = :user_id
+         AND MONTH(e.date_of_expense) = :month
+         AND YEAR(e.date_of_expense) = :year
+         AND ec.name = :category",
+      [
+        'user_id' => $_SESSION['user'],
+        'month' => $month,
+        'year' => $year,
+        'category' => $category
+      ]
     )->find();
 
-    return $monthSum;
+    return $result ? (float) $result['total'] : 0;
   }
 }

@@ -40,6 +40,48 @@
       const categorySelect = document.getElementById('categorySelect');
       const limitInfo = document.getElementById('limitInfo');
       const limitText = document.getElementById('limitText');
+      const dateInput = document.querySelector('input[name="date"]');
+      const usedAmountElement = document.getElementById('usedAmountText');
+
+      console.log('dateInput element:', dateInput);
+      console.log('dateInput initial value:', dateInput ? dateInput.value : 'NULL');
+      console.log('All inputs with name="date":', document.querySelectorAll('input[name="date"]'));
+      console.log('All inputs with class datepicker:', document.querySelectorAll('.datepicker'));
+
+      async function updateUsedAmount() {
+        const selectedCategory = categorySelect.value;
+        const selectedDate = dateInput.value;
+
+        console.log('dateInput element check:', dateInput);
+        console.log('dateInput.value:', selectedDate);
+        console.log('Visual date field value:', document.querySelector('.datepicker')?.value);
+
+        console.log('updateUsedAmount called:', {
+          selectedCategory,
+          selectedDate
+        });
+
+        if (!selectedCategory || selectedCategory === 'Wybierz kategorię wydatku') {
+          usedAmountElement.innerHTML = 'Wybierz kategorię aby zobaczyć wykorzystaną kwotę';
+          return;
+        }
+
+        try {
+          const response = await fetch(`/api/monthly-expenses?category=${selectedCategory}&date=${selectedDate}`);
+          const data = await response.json();
+
+          console.log('API Response:', data);
+
+          if (data.sum > 0) {
+            usedAmountElement.innerHTML = `<strong>${data.formatted}</strong>`;
+          } else {
+            usedAmountElement.innerHTML = 'Brak wydatków w tym miesiącu dla tej kategorii';
+          }
+        } catch (error) {
+          console.error('Błąd:', error);
+          usedAmountElement.innerHTML = 'Błąd pobierania danych';
+        }
+      }
 
       async function updateLimitInfo() {
         const selectedCategory = categorySelect.value;
@@ -47,11 +89,11 @@
         if (!selectedCategory || selectedCategory === '' || selectedCategory === 'Wybierz kategorię wydatku') {
           limitInfo.style.display = 'block';
           limitText.innerHTML = 'Wymagany wybór kategorii';
+          usedAmountElement.innerHTML = 'Wybierz kategorię aby zobaczyć wykorzystaną kwotę';
           return;
         }
 
         const limitData = await getLimitForCategory(selectedCategory);
-
         limitInfo.style.display = 'block';
 
         if (limitData && limitData.has_limit && parseFloat(limitData.limit) > 0) {
@@ -59,9 +101,18 @@
         } else {
           limitText.innerHTML = 'Brak limitu dla wybranej kategorii';
         }
+
+        await updateUsedAmount();
       }
 
       categorySelect.addEventListener('change', updateLimitInfo);
+      dateInput.addEventListener('change', updateUsedAmount);
+
+      $('.datepicker').on('change', function() {
+        console.log('jQuery datepicker changed to:', this.value);
+        updateUsedAmount();
+      });
+
       updateLimitInfo();
     });
   </script>
