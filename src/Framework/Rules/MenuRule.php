@@ -10,7 +10,13 @@ class MenuRule implements RuleInterface
 {
   public function validate(array $data, string $field, array $params): bool
   {
-    return (!in_array($data[$field], $params));
+    $value = $data[$field] ?? null;
+
+    if ($value === null) {
+      return false;
+    }
+
+    return (!in_array($value, $params));
   }
 
   public function getMessage(array $data, string $field, array $params): string
