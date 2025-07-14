@@ -38,6 +38,26 @@
             </div>
           <?php endif; ?>
 
+          <div class="modal fade below-limit-warning" id="belowLimitModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h5 class="modal-title">Ostrzeżenie o przekroczeniu limitu</h5>
+                </div>
+                <div class="modal-body">
+                  <p>Dodanie wydatku z podaną kwotą spowoduje, że będziesz w wybranym miesiącu na minusie względem ustawionego limitu. Czy na pewno chcesz dodać taką kwotę?</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal" id="modalCancel">Anuluj</button>
+                  <button type="button" class="btn btn-danger" id="modalConfirm">Tak, dodaj wydatek</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <?php $current_day = date('Y-m-d'); ?>
           <div class="input-group">
             <span class="icon-container"><i class="icon-calendar"></i></span>
@@ -76,7 +96,7 @@
 
           <div class="buttons">
             <input type="submit" value="Dodaj">
-            <input type="submit" value="Anuluj">
+            <input type="button" value="Anuluj" onclick="window.location.href='/expenses'">
           </div>
 
         </div>

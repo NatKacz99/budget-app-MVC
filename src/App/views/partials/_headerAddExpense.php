@@ -44,9 +44,12 @@
       const usedAmountElement = document.getElementById('usedAmountText');
       const limitBalanceElement = document.getElementById('limitBalance');
       const priceInput = document.querySelector('input[name="price"]');
+      const form = document.querySelector('form');
+      const modalConfirm = document.getElementById('modalConfirm');
 
       let currentLimitData = null;
       let currentUsedAmount = 0;
+      let isSubmitting = false;
 
       async function updateUsedAmount() {
         const selectedCategory = categorySelect.value;
@@ -78,6 +81,7 @@
       async function updateLimitBalance(additionalAmount = 0) {
         const selectedCategory = categorySelect.value;
         const selectedDate = dateInput.value;
+        const belowLimitWarningModal = document.getElementsByClassName('below-limit-warning')[0];
 
         if (!selectedCategory || selectedCategory === 'Wybierz kategorię wydatku') {
           limitBalanceElement.innerHTML = 'Wybierz kategorię, by zobaczyć bilans';
@@ -99,6 +103,7 @@
 
             const balanceClass = balance >= 0 ? 'color: rgb(17, 55, 17)' : 'color: red';
             limitBalanceElement.innerHTML = `<span style="${balanceClass}"><strong>${balance.toFixed(2)} zł</strong></span>`;
+            return balance;
           } else {
             limitBalanceElement.innerHTML = currentLimitData.message || 'Błąd pobierania bilansu';
           }
@@ -169,6 +174,42 @@
       });
 
       updateLimitInfo();
+
+      async function checkLimitOnSubmit(event) {
+        if (isSubmitting) {
+          console.log('✅ Already confirmed, proceeding...');
+          return true;
+        }
+
+        const currentAmount = parseInputAmount();
+        console.log('💰 Current amount:', currentAmount);
+
+        if (currentAmount <= 0) {
+          return true;
+        }
+
+        const balance = await updateLimitBalance(currentAmount);
+        console.log('⚖️ Balance:', balance);
+
+        if (balance !== null && balance < 0) {
+          event.preventDefault();
+          event.stopPropagation();
+
+          $('#belowLimitModal').modal('show');
+          return false;
+        }
+
+        console.log('✅ Balance OK, proceeding...');
+        return true;
+      }
+
+      form.addEventListener('submit', checkLimitOnSubmit);
+
+      modalConfirm.addEventListener('click', function() {
+        isSubmitting = true;
+        $('#belowLimitModal').modal('hide');
+        form.submit();
+      });
     });
   </script>
 </head>
