@@ -49,13 +49,19 @@ class TransactionsService
   public function createIncome($formData)
   {
     $formattedDate = "{$formData['date']} 00:00:00";
-    $income_id = $this->db->query(
+    $incomeCategory = $this->db->query(
       "SELECT id FROM incomes_category_assigned_to_users WHERE user_id = :user_id AND name = :category",
       [
         'user_id' => $_SESSION['user'],
         'category' => $formData['category']
       ]
-    )->count();
+    )->find();
+
+    if (!$incomeCategory) {
+      throw new \RuntimeException("Nie znaleziono kategorii przychodu");
+    }
+
+    $income_id = $incomeCategory['id'];
 
     if (!$income_id) {
       throw new \RuntimeException("Nie znaleziono kategorii przychodu");
@@ -76,24 +82,38 @@ class TransactionsService
   public function createExpense($formData)
   {
     $formattedDate = "{$formData['date']} 00:00:00";
-    $expense_id = $this->db->query(
+    $expenseCategory = $this->db->query(
       "SELECT id FROM expenses_category_assigned_to_users WHERE user_id = :user_id AND name = :category",
       [
         'user_id' => $_SESSION['user'],
         'category' => $formData['category']
       ]
-    )->count();
+    )->find();
+
+    if (!$expenseCategory) {
+      throw new \RuntimeException("Nie znaleziono kategorii wydatku");
+    }
+
+    $expense_id = $expenseCategory['id'];
+
     if (!$expense_id) {
       throw new \RuntimeException("Nie znaleziono ID kategorii");
     }
 
-    $payment_method_id = $this->db->query(
+    $paymentMethodCategory = $this->db->query(
       "SELECT id FROM payment_methods_assigned_to_users WHERE user_id = :user_id AND name = :paymentMethod",
       [
         'user_id' => $_SESSION['user'],
         'paymentMethod' => $formData['paymentMethod']
       ]
-    )->count();
+    )->find();
+
+    if (!$expenseCategory) {
+      throw new \RuntimeException("Nie znaleziono kategorii metody płatności");
+    }
+
+    $payment_method_id = $paymentMethodCategory['id'];
+
     if (!$payment_method_id) {
       throw new \RuntimeException("Nie znaleziono ID metody płatności");
     }
