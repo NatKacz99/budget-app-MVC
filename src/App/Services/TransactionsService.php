@@ -8,7 +8,7 @@ use Framework\Database;
 
 class TransactionsService
 {
-  public function __construct(private Database $db) {}
+  public function __construct(private Database $db, private ValidatorService $validator) {}
 
   public function selectCategoriesIncomes(): Database
   {
@@ -58,7 +58,7 @@ class TransactionsService
     )->count();
 
     if (!$income_id) {
-      die("Błąd: Nie znaleziono ID kategorii dla użytkownika {$_SESSION['user']} i kategorii {$formData['category']}");
+      throw new \RuntimeException("Nie znaleziono kategorii przychodu");
     }
     $sql = "INSERT INTO incomes(user_id, income_category_assigned_to_user_id, amount, date_of_income, income_comment)
         VALUES(:user_id, :income_id, :amount, :date_of_income, :income_comment)";
@@ -84,7 +84,7 @@ class TransactionsService
       ]
     )->count();
     if (!$expense_id) {
-      die("Błąd: Nie znaleziono ID kategorii dla użytkownika {$_SESSION['user']} i kategorii {$formData['category']}");
+      throw new \RuntimeException("Nie znaleziono ID kategorii");
     }
 
     $payment_method_id = $this->db->query(
@@ -95,7 +95,7 @@ class TransactionsService
       ]
     )->count();
     if (!$payment_method_id) {
-      die("Błąd: Nie znaleziono ID metody płatności dla użytkownika {$_SESSION['user']} i kategorii {$formData['paymentMethod']}");
+      throw new \RuntimeException("Nie znaleziono ID metody płatności");
     }
 
     $sql = "INSERT INTO expenses(user_id, expense_category_assigned_to_user_id, payment_method_assigned_to_user_id, amount, date_of_expense, expense_comment)
@@ -115,9 +115,11 @@ class TransactionsService
   public function getUserIncomes(int $length, int $offset)
   {
     $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
+    $safeLength = $this->validator->validateLimit($length, 10, 1000);
+    $safeOffset = $this->validator->validateOffset($offset);
     $params = [
       'user_id' => $_SESSION['user'],
-      'name' => "%{$searchTerm}%"
+      'name' => "%{$searchTerm}%",
     ];
 
     $incomes = $this->db->query(
@@ -127,7 +129,7 @@ class TransactionsService
        WHERE incomes.user_id = :user_id
        AND name LIKE :name
        ORDER BY incomes.amount DESC
-       LIMIT {$length} OFFSET {$offset}",
+       LIMIT {$safeLength} OFFSET {$safeOffset}",
       $params
     )->findAll();
 
@@ -145,9 +147,11 @@ class TransactionsService
   public function getUserExpenses(int $length, int $offset)
   {
     $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
+    $safeLength = $this->validator->validateLimit($length, 10, 1000);
+    $safeOffset = $this->validator->validateOffset($offset);
     $params = [
       'user_id' => $_SESSION['user'],
-      'name' => "%{$searchTerm}%"
+      'name' => "%{$searchTerm}%",
     ];
 
     $expenses = $this->db->query(
@@ -157,7 +161,7 @@ class TransactionsService
        WHERE expenses.user_id = :user_id
        AND name LIKE :name
        ORDER BY expenses.amount DESC
-       LIMIT {$length} OFFSET {$offset}",
+       LIMIT {$safeLength} OFFSET {$safeOffset}",
       $params
     )->findAll();
 
@@ -201,6 +205,8 @@ class TransactionsService
   public function getUserIncomesByPeriod($startDay, $endDay, $length, $offset)
   {
     $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
+    $safeLength = $this->validator->validateLimit($length, 10, 1000);
+    $safeOffset = $this->validator->validateOffset($offset);
     $params = [
       'user_id' => $_SESSION['user'],
       'startDay' => $startDay,
@@ -215,7 +221,7 @@ class TransactionsService
        AND incomes.date_of_income BETWEEN :startDay and :endDay
        AND name LIKE :name
        ORDER BY incomes.amount DESC
-       LIMIT {$length} OFFSET {$offset}",
+       LIMIT {$safeLength} OFFSET {$safeOffset}",
       $params
     )->findAll();
 
@@ -234,6 +240,8 @@ class TransactionsService
   public function getUserExpensesByPeriod($startDay, $endDay, $length, $offset)
   {
     $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
+    $safeLength = $this->validator->validateLimit($length, 10, 1000);
+    $safeOffset = $this->validator->validateOffset($offset);
     $params = [
       'user_id' => $_SESSION['user'],
       'startDay' => $startDay,
@@ -248,7 +256,7 @@ class TransactionsService
        AND expenses.date_of_expense BETWEEN :startDay and :endDay
        AND name LIKE :name
        ORDER BY expenses.amount DESC
-       LIMIT {$length} OFFSET {$offset}",
+       LIMIT {$safeLength} OFFSET {$safeOffset}",
       $params
     )->findAll();
 

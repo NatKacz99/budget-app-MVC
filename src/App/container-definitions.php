@@ -26,8 +26,9 @@ return [
   },
   TransactionsService::class => function (Container $container) {
     $db = $container->get(Database::class);
+    $validator = $container->get(ValidatorService::class);
 
-    return new TransactionsService($db);
+    return new TransactionsService($db, $validator);
   },
   SettingsService::class => function (Container $container) {
     $db = $container->get(Database::class);
