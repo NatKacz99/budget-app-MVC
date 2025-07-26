@@ -113,6 +113,51 @@
                 <?php endif; ?>
               </div>
             </div>
+
+            <div class="tables-incomes-expenses-sum-for-categories">
+              <h2>Kwoty przychodów i wydatków sumarycznie dla danej kategorii</h2>
+              <div class="tables-container">
+                <div class="incomes">
+                  <h3>Przychody</h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="header-category">Kategoria</th>
+                        <th class="header-amount">Kwota (zł)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($categoriesIncomes as $categoryIncome) : ?>
+                        <tr>
+                          <td><?php echo e($categoryIncome['name']); ?></td>
+                          <td><strong><?php echo e($categoryIncome['sumCategory']); ?></strong></td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="expenses">
+                  <h3>Wydatki</h3>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="header-category">Kategoria</th>
+                        <th class="header-amount">Kwota (zł)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php foreach ($categoriesExpenses as $categoryExpense) : ?>
+                        <tr>
+                          <td><?php echo e($categoryExpense['name']); ?></td>
+                          <td><strong><?php echo e($categoryExpense['sumCategory']); ?></strong></td>
+                        </tr>
+                      <?php endforeach; ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
             <p id="lack" style="display: none"><b>Brak wyników.</b></p>
             <div id="pie-chart-incomes-container" style="height: 300px; width: 60%;"></div>
             <div id="pie-chart-expenses-container" style="height: 300px; width: 60%;"></div>
@@ -232,22 +277,34 @@
       const divTableIncomes = document.getElementsByClassName("incomes")[0];
       const divTableExpenses = document.getElementsByClassName("expenses")[0];
       const lack = document.getElementById("lack");
+
+      const summaryTables = document.getElementsByClassName("tables-incomes-expenses-sum-for-categories")[0];
+      const summaryIncomesTable = summaryTables.querySelector(".incomes");
+      const summaryExpensesTable = summaryTables.querySelector(".expenses");
+
       if ((!resultsIncomesCategory || resultsIncomesCategory.length === 0) && (!resultsExpensesCategory || resultsExpensesCategory.length === 0)) {
         chartExpensesDiv.style.display = "none";
         chartIncomesDiv.style.display = "none";
         divTables.style.display = "none";
         calculationDiv.style.display = "none";
-        lack.style.display = "block"
-      } else if (!resultsIncomesCategory || resultsIncomesCategory.length === 0) {
-        chartIncomesDiv.style.display = "none";
-      } else if (!resultsExpensesCategory || resultsExpensesCategory.length === 0) {
-        chartExpensesDiv.style.display = "none";
+        lack.style.display = "block";
+        summaryTables.style.display = "none";
+      } else {
+        if (!resultsIncomesCategory || resultsIncomesCategory.length === 0) {
+          chartIncomesDiv.style.display = "none";
+          summaryIncomesTable.style.display = "none";
+        }
+        if (!resultsExpensesCategory || resultsExpensesCategory.length === 0) {
+          chartExpensesDiv.style.display = "none";
+          summaryExpensesTable.style.display = "none";
+        }
       }
+
       if (!resultsIncomes || resultsIncomes.length === 0) {
-        divTableIncomes.style.display = "none"
+        divTableIncomes.style.display = "none";
       }
       if (!resultsExpenses || resultsExpenses.length === 0) {
-        divTableExpenses.style.display = "none"
+        divTableExpenses.style.display = "none";
       }
     });
   </script>

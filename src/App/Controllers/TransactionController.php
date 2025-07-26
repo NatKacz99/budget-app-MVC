@@ -210,7 +210,9 @@ class TransactionController
         'categoriesIncomes' => $categoriesIncomes,
         'categoriesExpenses' => $categoriesExpenses,
         'balance_sheet' => $balance_sheet,
-        'balance' => $balance
+        'balance' => $balance,
+        'total_sum_incomes' => $total_sum_incomes,
+        'total_sum_expenses' => $total_sum_expenses
       ]
     );
   }
