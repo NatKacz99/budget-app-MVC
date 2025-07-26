@@ -8,7 +8,8 @@ use App\Services\{
   ValidatorService,
   UserService,
   TransactionsService,
-  SettingsService
+  SettingsService,
+  GeminiAdvisor
 };
 
 return [
@@ -34,5 +35,8 @@ return [
     $db = $container->get(Database::class);
 
     return new SettingsService($db);
+  },
+  GeminiAdvisor::class => function (Container $container) {
+    return new GeminiAdvisor();
   }
 ];

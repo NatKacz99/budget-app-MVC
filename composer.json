@@ -3,7 +3,10 @@
   "description": "A web application for controlling and tracking your finances",
   "type": "project",
   "require": {
-    "vlucas/phpdotenv": "^5.6"
+    "vlucas/phpdotenv": "^5.6",
+    "gemini-api-php/client": "^1.7",
+    "symfony/http-client": "^7.3",
+    "nyholm/psr7": "^1.8"
   },
   "autoload": {
       "psr-4": {
@@ -17,6 +20,10 @@
   },
   "scripts" : {
     "budget-app-mvc": "php cli.php"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true
+    }
   }
-
 }

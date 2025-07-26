@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use Framework\TemplateEngine;
-use App\Services\{ValidatorService, TransactionsService};
+use App\Services\{ValidatorService, TransactionsService, GeminiAdvisor};
 
 class TransactionController
 {
   public function __construct(
     private TemplateEngine $view,
     private ValidatorService $validatorService,
-    private TransactionsService $transactionsService
+    private TransactionsService $transactionsService,
+    private GeminiAdvisor $geminiAdvisor
   ) {}
 
   public function createViewAddIncome()
@@ -167,6 +168,24 @@ class TransactionController
     $balance = $total_sum_incomes - $total_sum_expenses;
     $balance_sheet = $balance . " zł";
 
+    $financialAdvice = '';
+    if (!empty($categoriesIncomes) || !empty($categoriesExpenses)) {
+      try {
+        $financialData = [
+          'balance' => $balance,
+          'totalIncomes' => $total_sum_incomes,
+          'totalExpenses' => $total_sum_expenses,
+          'categoriesIncomes' => $categoriesIncomes,
+          'categoriesExpenses' => $categoriesExpenses,
+          'period' => $this->getPeriodDisplayName($selected_period)
+        ];
+
+        $financialAdvice = $this->geminiAdvisor->generateFinancialAdvice($financialData);
+      } catch (\Exception $e) {
+        $financialAdvice = '';
+      }
+    }
+
     $totalCount = max($incomesCount, $expensesCount);
 
     $lastPage = (int) max(1, ceil($totalCount / $length));
@@ -211,10 +230,20 @@ class TransactionController
         'categoriesExpenses' => $categoriesExpenses,
         'balance_sheet' => $balance_sheet,
         'balance' => $balance,
-        'total_sum_incomes' => $total_sum_incomes,
-        'total_sum_expenses' => $total_sum_expenses
+        'financialAdvice' => $financialAdvice,
       ]
     );
+  }
+
+  private function getPeriodDisplayName(string $period): string
+  {
+    return match ($period) {
+      'bieżący_miesiąc' => 'bieżący miesiąc',
+      'poprzedni_miesiąc' => 'poprzedni miesiąc',
+      'bieżący_rok' => 'bieżący rok',
+      'niestandardowy' => 'okres niestandardowy',
+      default => 'bieżący miesiąc'
+    };
   }
 
   public function setExpenseLimit()

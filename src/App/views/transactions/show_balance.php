@@ -175,6 +175,38 @@
               </span>
             </div>
 
+            <div class="ai-financial-advice-container">
+              <div style="display: flex; align-items: center; margin-bottom: 15px;">
+                <div style="
+                  background: rgba(255,255,255,0.2);
+                  border-radius: 50%;
+                  padding: 10px;
+                  margin-right: 15px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L13.09 8.26L19 7L14.74 12L19 17L13.09 15.74L12 22L10.91 15.74L5 17L9.26 12L5 7L10.91 8.26L12 2Z" fill="currentColor" />
+                  </svg>
+                </div>
+                <h3 style="margin: 0; font-size: 1.3em; font-weight: 600;">
+                  💡 Twój Osobisty Doradca Finansowy AI
+                </h3>
+              </div>
+
+              <div class="financial-advice">
+                <?php echo (htmlspecialchars($financialAdvice)); ?>
+              </div>
+
+              <div style="
+              margin-top: 15px;
+              font-size: 0.9em;
+              opacity: 0.8;
+              text-align: center;">
+                <em>Rada wygenerowana przez sztuczną inteligencję na podstawie Twoich danych finansowych</em>
+              </div>
+            </div>
+
             <ul class="pagination">
               <!-- Poprzednia strona -->
               <li class="<?= ($currentPage <= 1) ? 'disabled' : '' ?>">

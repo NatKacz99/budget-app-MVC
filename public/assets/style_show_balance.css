@@ -194,6 +194,24 @@ input[value="Wybierz okres"]:hover {
   margin-bottom: 4px;
 }
 
+.ai-financial-advice-container {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.financial-advice {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  border-left: 4px solid rgba(255, 255, 255, 0.3);
+  line-height: 1.6;
+  font-size: 1.05em;
+}
+
 .pagination {
   display: flex;
   gap: 8px;
@@ -283,7 +301,7 @@ input[value="Wybierz okres"]:hover {
     align-items: center
   }
 
-  .tables-container{
+  .tables-container {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -367,7 +385,7 @@ input[value="Wybierz okres"]:hover {
     align-items: center
   }
 
-  .tables-container{
+  .tables-container {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
