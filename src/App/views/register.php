@@ -87,6 +87,20 @@
       </main>
     </div>
   </div>
+
+  <?php if (isset($_SESSION['debug_info'])): ?>
+    <div style="background: yellow; padding: 20px; margin: 20px; border: 2px solid red;">
+      <h2>🐛 INFORMACJE DEBUGOWANIA:</h2>
+      <pre style="background: white; padding: 10px;">
+<?php
+    foreach ($_SESSION['debug_info'] as $info) {
+      echo $info . "\n";
+    }
+?>
+        </pre>
+    </div>
+    <?php unset($_SESSION['debug_info']); ?>
+  <?php endif; ?>
 </body>
 
 </html>

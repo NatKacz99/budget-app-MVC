@@ -29,8 +29,6 @@ class UserService
 
   public function setMaxIdIncomesAssignedToUsers()
   {
-    $_SESSION['user'] = $this->db->id();
-
     $row = $this->db->query("SELECT MAX(id) AS max_id FROM incomes_category_assigned_to_users")->find();
 
     $max_id = $row['max_id'];
@@ -87,6 +85,7 @@ class UserService
     if (!isset($formData['name'])) {
       throw new \Exception('Pole "name" jest wymagane.');
     }
+
     try {
       $this->db->query(
         "INSERT INTO users(name, password, email) VALUES(:name, :password, :email)",
@@ -107,14 +106,15 @@ class UserService
       throw new Exception("Błąd: Nie udało się uzyskać ID nowo zarejestrowanego użytkownika.");
     }
 
-    $_SESSION['user'] = $user_id;
-
     $this->setMaxIdIncomesAssignedToUsers();
     $this->attributeIncomesCategoriesToRegisteredUser((int) $user_id);
     $this->attributeExpensesCategoriesToRegisteredUser((int) $user_id);
     $this->attributePaymentMethodsToRegisteredUser((int) $user_id);
 
-    session_regenerate_id();
+    unset($_SESSION['user']);
+    unset($_SESSION['name']);
+
+    return (int) $user_id;
   }
 
   public function login(array $formData)

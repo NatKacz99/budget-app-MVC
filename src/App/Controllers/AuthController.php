@@ -22,6 +22,9 @@ class AuthController
 
   public function register()
   {
+    unset($_SESSION['user']);
+    unset($_SESSION['name']);
+
     $this->validatorService->validateRegister($_POST);
 
     $this->userService->isEmailTaken($_POST['email']);

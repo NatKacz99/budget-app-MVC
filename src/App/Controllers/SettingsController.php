@@ -29,7 +29,7 @@ class SettingsController
       ]
     );
   }
-  // Poprawka: Rozbij na mniejsze metody
+
   public function edit()
   {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
