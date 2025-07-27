@@ -76,7 +76,11 @@ class TransactionController
       header("Location: balance?p=1");
       exit;
     }
-    $selected_period = $_SESSION['selected_period'] ?? '';
+    $selected_period = $_SESSION['selected_period'] ?? 'bieżący_miesiąc';
+
+    if (!isset($_SESSION['selected_period'])) {
+      $_SESSION['selected_period'] = 'bieżący_miesiąc';
+    }
 
     $startDay = $endDay = null;
 
